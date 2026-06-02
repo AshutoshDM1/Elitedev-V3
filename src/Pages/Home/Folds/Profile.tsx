@@ -1,0 +1,36 @@
+import { ThemeToggle } from "@/components/theme-toggle";
+import SubSection from "@/Shared/Section/SubSection";
+import { BadgeCheck } from "lucide-react";
+import Image from "next/image";
+
+const ProfileSection = () => {
+  return (
+    <SubSection>
+      <div className="flex justify-between">
+        <div className="flex gap-3">
+          <div className="size-24 border rounded-sm p-1 ">
+            <Image
+              src="/avatar2.png"
+              height={200}
+              width={200}
+              className="size-full object-cover rounded-sm border shadow-sm"
+              alt="profile Image"
+            />
+          </div>
+          <div className="flex flex-col justify-end pb-2">
+            <h2 className="font-medium text-lg leading-5 flex items-center gap-1.5">
+              Ashutosh Tiwari{" "}
+              <BadgeCheck className="size-[18px] fill-blue-500 text-white shrink-0" />
+            </h2>
+            <p className="text-xs leading-5 ">Software Engineer</p>
+          </div>
+        </div>
+        <div className="flex items-start">
+          <ThemeToggle />
+        </div>
+      </div>
+    </SubSection>
+  );
+};
+
+export default ProfileSection;
