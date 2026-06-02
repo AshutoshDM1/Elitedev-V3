@@ -8,7 +8,7 @@ interface Props {
 
 const LineY: React.FC<Props> = ({ className, children }) => {
     return (
-        <div className={cn('border-b border-muted-foreground/50 border-dashed ', className)}>
+        <div className={cn('border-b border-muted-foreground/50 border-dashed  ', className)}>
             {children}
         </div>
     );

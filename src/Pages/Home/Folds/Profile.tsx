@@ -3,7 +3,7 @@ import SubSection from "@/Shared/Section/SubSection";
 import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 
-const ProfileSection = () => {
+const Profile = () => {
   return (
     <SubSection>
       <div className="flex justify-between">
@@ -20,7 +20,7 @@ const ProfileSection = () => {
           <div className="flex flex-col justify-end pb-2">
             <h2 className="font-medium text-lg leading-5 flex items-center gap-1.5">
               Ashutosh Tiwari{" "}
-              <BadgeCheck className="size-[18px] fill-blue-500 text-white shrink-0" />
+              <BadgeCheck className="size-[18px] fill-blue-500  text-white dark:text-black shrink-0" />
             </h2>
             <p className="text-xs leading-5 ">Software Engineer</p>
           </div>
@@ -33,4 +33,4 @@ const ProfileSection = () => {
   );
 };
 
-export default ProfileSection;
+export default Profile;
