@@ -10,7 +10,7 @@ const Profile = () => {
         <div className="flex gap-3">
           <div className="size-24 border rounded-sm p-1 ">
             <Image
-              src="/avatar2.png"
+              src="/avatar/avatar.png"
               height={200}
               width={200}
               className="size-full object-cover rounded-sm border shadow-sm"

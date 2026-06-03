@@ -6,8 +6,9 @@ import Skills from "@/Shared/Skills/Skills";
 import { ChevronDown, ChevronUp, Briefcase } from "lucide-react";
 import Image from "next/image";
 import LineY from "@/Shared/Line/LineY";
+import { Experiences } from "@/data/exprerience";
 
-interface Experience {
+export interface Experience {
   id: number;
   company: string;
   companyIcon?: string;
@@ -22,51 +23,6 @@ interface Experience {
 }
 
 export default function Experience() {
-  const Experiences: Experience[] = [
-    {
-      id: 1,
-      company: "EdgeNroots",
-      companyIcon: "/companyv2.png",
-      position: "Software Engineer",
-      startDate: "May, 2025",
-      endDate: "July, 2025",
-      companyLocation: "New Delhi, India",
-      userLocation: "Remote",
-      jobType: "Full Time",
-      description: [
-        "Owned the core presentation editor, driving major performance and reliability improvements",
-        "Designed and built core editor features like drag-and-drop, resize, and keyboard shortcuts end-to-end",
-        "Owned a foundational refactor, strengthening a critical codebase to enable safer and faster production",
-        "Drove major Drive page performance improvements, resolving bugs to deliver faster, reliable experiences",
-      ],
-      skills: [
-        "Next",
-        "Tailwind",
-        "TypeScript",
-        "JavaScript",
-        "Express",
-        "PostgreSQL",
-        "Docker",
-      ],
-    },
-    {
-      id: 2,
-      company: "EdgeNroots",
-      companyIcon: "/companyv2.png",
-      position: "Frontend Developer Intern",
-      startDate: "Aug, 2025",
-      endDate: "Mar, 2026",
-      companyLocation: "New Delhi, India",
-      userLocation: "Remote",
-      jobType: "Internship",
-      description: [
-        "Collaborated with product designers to implement pixel-perfect user interfaces using React and TailwindCSS",
-        "Optimized frontend bundle sizes by 25% through code splitting and tree shaking techniques",
-        "Integrated complex third-party RESTful APIs, facilitating real-time data updates for active users",
-      ],
-      skills: ["React", "Tailwind", "JavaScript", "HTML5", "CSS3", "Git"],
-    },
-  ];
 
   return (
     <>
