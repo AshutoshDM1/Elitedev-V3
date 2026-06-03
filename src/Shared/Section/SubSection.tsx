@@ -13,9 +13,9 @@ interface SubSectionProp {
 const SubSection: React.FC<SubSectionProp> = ({ className, id, children }) => {
   return (
     <LineY>
-      <Section id={id || ""}>
+      <Section className={cn("", className)} id={id || ""}>
         <LineX>
-          <div className={cn("", className)}>{children}</div>
+          <div>{children}</div>
           <LineJoint side="left" vertical="top" />
           <LineJoint side="right" vertical="top" />
           <LineJoint side="left" vertical="bottom" />

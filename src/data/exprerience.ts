@@ -1,4 +1,4 @@
-import { Experience } from "@/Pages/Home/Folds/Experience";
+import { Experience } from "@/views/Home/Folds/Experience";
 
 export const Experiences: Experience[] = [
   {
@@ -82,7 +82,7 @@ export const Experiences: Experience[] = [
       "Algorithm",
       "Operating System",
       "Database Management System",
-      "SQL"
+      "SQL",
     ],
   },
 ];

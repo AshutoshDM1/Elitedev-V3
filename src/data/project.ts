@@ -1,4 +1,4 @@
-import { ProjectProps } from "@/Pages/Home/Folds/Project";
+import { ProjectProps } from "@/views/Home/Folds/Project";
 import { bg } from "@/assest/import";
 
 export const projects: ProjectProps[] = [

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Oxanium } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Provider from "@/components/Provider";
+import { Analytics } from "@vercel/analytics/next"
+
 
 const oxanium = Oxanium({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -38,6 +40,7 @@ export default function RootLayout({
         <Provider>
           {children}
         </Provider>
+        <Analytics />
       </body>
     </html>
   );
