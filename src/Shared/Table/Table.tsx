@@ -69,7 +69,7 @@ export function Table<T>({
   return (
     <div
       className={cn(
-        "w-full overflow-hidden border border-dashed border-zinc-400 dark:border-zinc-700 rounded-none bg-background/50 backdrop-blur-sm",
+        "w-full overflow-hidden border border-double border-zinc-400 dark:border-zinc-700 rounded-none bg-background/50 backdrop-blur-sm",
         containerClassName
       )}
     >
@@ -79,7 +79,7 @@ export function Table<T>({
           style={{ tableLayout: Object.keys(widths).length > 0 ? "fixed" : "auto" }}
         >
           <TableHeader>
-            <TableRow className="border-b border-dashed border-zinc-400 dark:border-zinc-700 hover:bg-transparent rounded-none">
+            <TableRow className="border-b border-double border-zinc-400 dark:border-zinc-700 hover:bg-transparent rounded-none">
               {columns.map((column, index) => {
                 const columnKey = String(column.accessorKey) + index;
                 const columnWidth = widths[columnKey];
@@ -98,7 +98,7 @@ export function Table<T>({
                       minWidth: columnWidth ? `${columnWidth}px` : undefined,
                     }}
                     className={cn(
-                      "relative group font-mono text-[10px] tracking-wider uppercase border-r border-dashed border-zinc-400 dark:border-zinc-700 last:border-r-0 py-3 px-4 text-muted-foreground bg-muted/40 select-none",
+                      "relative group font-mono text-[10px] tracking-wider uppercase border-r border-double border-zinc-400 dark:border-zinc-700 last:border-r-0 py-3 px-4 text-muted-foreground bg-muted/40 select-none",
                       isSortable && "cursor-pointer hover:bg-muted/60 transition-colors",
                       column.className
                     )}
@@ -140,7 +140,7 @@ export function Table<T>({
                   key={rowIndex}
                   onClick={() => onRowClick?.(item)}
                   className={cn(
-                    "border-b border-dashed border-zinc-400 dark:border-zinc-700 last:border-b-0 hover:bg-muted/20 transition-colors duration-150 ease-in-out cursor-default rounded-none",
+                    "border-b border-double border-zinc-400 dark:border-zinc-700 last:border-b-0 hover:bg-muted/20 transition-colors duration-150 ease-in-out cursor-default rounded-none",
                     onRowClick && "cursor-pointer"
                   )}
                 >
@@ -159,7 +159,7 @@ export function Table<T>({
                           minWidth: columnWidth ? `${columnWidth}px` : undefined,
                         }}
                         className={cn(
-                          "font-sans text-xs border-r border-dashed border-zinc-400 dark:border-zinc-700 last:border-r-0 p-4 align-top text-foreground/90 overflow-hidden",
+                          "font-sans text-xs border-r border-double border-zinc-400 dark:border-zinc-700 last:border-r-0 p-4 align-top text-foreground/90 overflow-hidden",
                           column.className
                         )}
                       >

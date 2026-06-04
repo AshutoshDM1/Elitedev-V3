@@ -1,4 +1,4 @@
-import { banner } from "@/assest/import";
+import { banner } from "@/assets/import";
 import LineY from "@/Shared/Line/LineY";
 import SubSection from "@/Shared/Section/SubSection";
 import Image from "next/image";

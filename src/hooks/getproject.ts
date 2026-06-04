@@ -9,6 +9,9 @@ export interface Project {
   liveUrl: string | null;
   clientRepo: string | null;
   serverRepo: string | null;
+  isMonorepo: boolean;
+  repoUrl: string | null;
+  backgroundImage: string | null;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

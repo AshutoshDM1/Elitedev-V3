@@ -1,7 +1,7 @@
-import { ProjectProps } from "@/views/Home/Folds/Project";
-import { bg } from "@/assest/import";
+import { UnifiedProject } from "@/Shared/ProjectCard/ProjectCard";
+import { bg } from "@/assets/import";
 
-export const projects: ProjectProps[] = [
+export const projects: UnifiedProject[] = [
   {
     id: 1,
     name: "Aset",

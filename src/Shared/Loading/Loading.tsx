@@ -24,11 +24,6 @@ export default function Loading({
       <Loader className="w-6 h-6 animate-spin text-zinc-550 dark:text-zinc-400" />
       <div className="text-center space-y-1">
         <p className="font-mono text-xs font-medium text-muted-foreground ">{message}</p>
-        {subMessage && (
-          <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
-            {subMessage}
-          </p>
-        )}
       </div>
     </div>
   );

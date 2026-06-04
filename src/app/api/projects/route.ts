@@ -1,46 +1,56 @@
 import db from "@/db/db";
-import { projects } from "@/db/schema";
+import { projects, frontend, backend, techStack } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const data = await db.select().from(projects).orderBy(projects.id);
+    // 1. Fetch all projects
+    const allProjects = await db.select().from(projects).orderBy(projects.id);
+
+    // 2. Fetch all frontends with their tech stack name
+    const frontends = await db
+      .select({
+        projectId: frontend.projectId,
+        techStackName: techStack.name,
+      })
+      .from(frontend)
+      .leftJoin(techStack, eq(frontend.techStackId, techStack.id));
+
+    // 3. Fetch all backends with their tech stack name
+    const backends = await db
+      .select({
+        projectId: backend.projectId,
+        techStackName: techStack.name,
+      })
+      .from(backend)
+      .leftJoin(techStack, eq(backend.techStackId, techStack.id));
+
+    // 4. Map them together
+    const data = allProjects.map((proj) => {
+      // Find matching frontend/backend tech stacks
+      const feStacks = frontends
+        .filter((f) => f.projectId === proj.id && f.techStackName)
+        .map((f) => f.techStackName as string);
+      
+      const beStacks = backends
+        .filter((b) => b.projectId === proj.id && b.techStackName)
+        .map((b) => b.techStackName as string);
+
+      // Combine and filter unique tags
+      const uniqueTags = Array.from(new Set([...feStacks, ...beStacks]));
+      const tagsString = uniqueTags.join(", ");
+
+      return {
+        ...proj,
+        image: proj.projectImage,
+        tags: tagsString,
+      };
+    });
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Failed to fetch projects:", error);
     return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
-  }
-}
-
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    const { title, description, image, tags, liveUrl, clientRepo, serverRepo, isActive } = body;
-
-    if (!title || !description || !image) {
-      return NextResponse.json(
-        { error: "Title, description, and image URL are required" },
-        { status: 400 }
-      );
-    }
-
-    const newProject = await db
-      .insert(projects)
-      .values({
-        title,
-        description,
-        image,
-        tags: tags || "",
-        liveUrl: liveUrl || null,
-        clientRepo: clientRepo || null,
-        serverRepo: serverRepo || null,
-        isActive: isActive !== undefined ? isActive : true,
-      })
-      .returning();
-
-    return NextResponse.json(newProject[0]);
-  } catch (error) {
-    console.error("Failed to create project:", error);
-    return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
   }
 }

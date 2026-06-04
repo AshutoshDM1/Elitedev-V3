@@ -1,31 +1,27 @@
 import "dotenv/config";
 import db from "./db";
-import { projects } from "./schema";
-import { projects as initialProjects } from "../data/project";
+import {
+  projects,
+  frontend,
+  backend,
+  projectTasks,
+  techStack,
+  techCategory,
+} from "./schema";
 
 async function main() {
-  console.log("Seeding projects data...");
+  console.log("Clearing all tables in the database...");
   try {
-    // Clear existing projects first
+    // Clear existing tables in correct order due to foreign key constraints
+    await db.delete(projectTasks);
+    await db.delete(frontend);
+    await db.delete(backend);
+    await db.delete(techStack);
     await db.delete(projects);
-    console.log("Cleared existing projects.");
-
-    // Seed the database
-    const insertData = initialProjects.map((p) => ({
-      title: p.name,
-      description: p.description || p.shortDescription || "",
-      image: p.projectImage,
-      tags: (p.skills || []).join(","),
-      liveUrl: p.liveLink || null,
-      clientRepo: p.githubLink || null,
-      serverRepo: null,
-      isActive: true,
-    }));
-
-    await db.insert(projects).values(insertData);
-    console.log("Projects seeded successfully!");
+    await db.delete(techCategory);
+    console.log("All tables cleared successfully. Database is clean!");
   } catch (error) {
-    console.error("Seeding failed:", error);
+    console.error("Clearing database failed:", error);
     process.exit(1);
   }
 }
