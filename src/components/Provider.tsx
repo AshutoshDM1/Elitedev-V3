@@ -19,6 +19,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     <QueryClientProvider client={queryClient}>
       {process.env.NODE_ENV === "development" && (
         <>
+          <FontChanger />
           <FontInitializer />
         </>
       )}
@@ -30,11 +31,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </ThemeProvider>
-      {process.env.NODE_ENV === "development" && (
-        <>
-          <FontChanger />
-        </>
-      )}
     </QueryClientProvider>
   );
 };

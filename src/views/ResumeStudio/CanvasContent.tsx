@@ -1,6 +1,16 @@
 import { Phone, MapPin, Globe, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/Shared/Icons/Icons";
-import { H1, H2, H3, H4, P, Strong, Link, ContactItem, Li } from "./Texts";
+import {
+  H1,
+  H2,
+  H3,
+  H4,
+  P,
+  Strong,
+  Link,
+  ContactItem,
+  Li,
+} from "./components/Texts";
 
 export default function CanvasContent() {
   return (
@@ -135,7 +145,10 @@ export default function CanvasContent() {
                   implementing feature requests.
                 </Li>
                 <Li>
-                  Improved <Strong>performance</Strong> by <Strong>up to 60%</Strong>, <Strong>reduced</Strong> infrastructure <Strong>Vercel costs by 40%</Strong> through the use of <Strong>SSR, SSG, and ISR</Strong> in Next.js.
+                  Improved <Strong>performance</Strong> by{" "}
+                  <Strong>up to 60%</Strong>, <Strong>reduced</Strong>{" "}
+                  infrastructure <Strong>Vercel costs by 40%</Strong> through
+                  the use of <Strong>SSR, SSG, and ISR</Strong> in Next.js.
                 </Li>
               </ul>
             </div>
@@ -197,20 +210,19 @@ export default function CanvasContent() {
                 <Li>
                   <Strong>AI-powered Contest </Strong> and codebase analysis
                   platform designed for technical assessments and
-                  <Strong>{" "}developer contests</Strong>.
+                  <Strong> developer contests</Strong>.
                 </Li>
                 <Li>
-                  Create <Strong>TypeScript</Strong>{" "}
-                  support Coding challenges powered by <Strong>AI Agent</Strong>{" "}
-                  and solve{" "}
+                  Create <Strong>TypeScript</Strong> support Coding challenges
+                  powered by <Strong>AI Agent</Strong> and solve{" "}
                   <Strong>in-browser code editor</Strong> powered by{" "}
                   <Strong>Stakebliz WebContainer</Strong>.
                 </Li>
                 <Li>
                   Created <Strong>public coding contests</Strong> with
-                  AI-powered interviews and <Strong>leaderboards</Strong> , using{" "}
-                  <Strong>Redis caching</Strong> to achieve response times below{" "}
-                  <Strong>50ms</Strong>.
+                  AI-powered interviews and <Strong>leaderboards</Strong> ,
+                  using <Strong>Redis caching</Strong> to achieve response times
+                  below <Strong>50ms</Strong>.
                 </Li>
                 <Li>
                   Built and managed a<Strong> Bun monorepo</Strong> with
@@ -250,7 +262,7 @@ export default function CanvasContent() {
                 </Li>
 
                 <Li>
-                  Created the{" "}<Strong>Aset SDK</Strong>, as a{" "}
+                  Created the <Strong>Aset SDK</Strong>, as a{" "}
                   <Strong>NPM Package</Strong> enabling users to integrate aset
                   cloud storage into their application with{" "}
                   <Strong>two commands</Strong>.
@@ -342,8 +354,8 @@ export default function CanvasContent() {
               <Strong>Outstanding Performance</Strong> at EdgeNroots.
             </Li>
             <Li>
-              <Strong>20+ deployed Projects</Strong> On
-              Vercel and DigitalOcean. All available on my{" "}
+              <Strong>20+ deployed Projects</Strong> On Vercel and DigitalOcean.
+              All available on my{" "}
               <Link className="underline" href="https://github.com/AshutoshDM1">
                 GitHub
               </Link>{" "}
