@@ -1,10 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-// ==========================================
-// Types
-// ==========================================
-
 export interface TechCategory {
   id: number;
   name: string;
@@ -34,12 +30,19 @@ export interface Project {
   techCategoryId: number | null;
   techCategoryName?: string | null;
   liveUrl: string | null;
-  frontendRepo: string | null;
-  backendRepo: string | null;
   isMonorepo: boolean;
   repoUrl: string | null;
   backgroundImage: string | null;
-  isActive: boolean;
+  isActivelyMaintining: boolean;
+  islatestReadme: boolean;
+  isCustomDomain: boolean;
+  isSelfHostingDatabase: boolean;
+  isNeonDatabase: boolean;
+  isLLDAvailable: boolean;
+  isAuth: boolean;
+  isGoogleAuth: boolean;
+  isGithubAuth: boolean;
+  techStackIds?: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -53,11 +56,10 @@ export interface Frontend {
   techStackId: number | null;
   techStackName?: string | null;
   liveUrl: string | null;
-  clientRepo: string | null;
   isMonorepo: boolean;
   repoUrl: string | null;
   rootPath: string | null;
-  isActive: boolean;
+  isActivelyMaintining: boolean;
   deploymentPlatform: string | null;
   cicd: boolean;
   cicdTool: string | null;
@@ -87,11 +89,10 @@ export interface Backend {
   deploymentPlatform: string | null;
   isCliTool: boolean;
   npmVersion: boolean; // represents is_server_less
-  serverRepo: string | null;
   isMonorepo: boolean;
   repoUrl: string | null;
   rootPath: string | null;
-  isActive: boolean;
+  isActivelyMaintining: boolean;
   status: string;
   stars: number;
   forks: number;
@@ -245,6 +246,7 @@ export function useCreateProject() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["tech-stack"] });
     },
   });
 }
@@ -259,6 +261,7 @@ export function useUpdateProject() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["tech-stack"] });
     },
   });
 }
@@ -273,6 +276,7 @@ export function useDeleteProject() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["tech-stack"] });
     },
   });
 }

@@ -1,6 +1,6 @@
 import db from "@/db/db";
-import { projects, techCategory } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { projects, techCategory, techStack } from "@/db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -15,12 +15,18 @@ export async function GET() {
         techCategoryId: projects.techCategoryId,
         techCategoryName: techCategory.name,
         liveUrl: projects.liveUrl,
-        frontendRepo: projects.frontendRepo,
-        backendRepo: projects.backendRepo,
         isMonorepo: projects.isMonorepo,
         repoUrl: projects.repoUrl,
         backgroundImage: projects.backgroundImage,
-        isActive: projects.isActive,
+        isActivelyMaintining: projects.isActivelyMaintining,
+        islatestReadme: projects.islatestReadme,
+        isCustomDomain: projects.isCustomDomain,
+        isSelfHostingDatabase: projects.isSelfHostingDatabase,
+        isNeonDatabase: projects.isNeonDatabase,
+        isLLDAvailable: projects.isLLDAvailable,
+        isAuth: projects.isAuth,
+        isGoogleAuth: projects.isGoogleAuth,
+        isGithubAuth: projects.isGithubAuth,
         createdAt: projects.createdAt,
         updatedAt: projects.updatedAt,
       })
@@ -45,12 +51,19 @@ export async function POST(req: Request) {
       projectImage,
       techCategoryId,
       liveUrl,
-      frontendRepo,
-      backendRepo,
       isMonorepo,
       repoUrl,
       backgroundImage,
-      isActive,
+      isActivelyMaintining,
+      islatestReadme,
+      isCustomDomain,
+      isSelfHostingDatabase,
+      isNeonDatabase,
+      isLLDAvailable,
+      isAuth,
+      isGoogleAuth,
+      isGithubAuth,
+      techStackIds,
     } = body;
 
     if (!title || !description || !shortDescription || !projectImage) {
@@ -69,14 +82,30 @@ export async function POST(req: Request) {
         projectImage,
         techCategoryId: techCategoryId ? parseInt(techCategoryId, 10) : null,
         liveUrl: liveUrl || null,
-        frontendRepo: frontendRepo || null,
-        backendRepo: backendRepo || null,
         isMonorepo: !!isMonorepo,
         repoUrl: repoUrl || null,
         backgroundImage: backgroundImage || "background.jpg",
-        isActive: isActive !== undefined ? !!isActive : true,
+        isActivelyMaintining: isActivelyMaintining !== undefined ? !!isActivelyMaintining : true,
+        islatestReadme: !!islatestReadme,
+        isCustomDomain: !!isCustomDomain,
+        isSelfHostingDatabase: !!isSelfHostingDatabase,
+        isNeonDatabase: !!isNeonDatabase,
+        isLLDAvailable: !!isLLDAvailable,
+        isAuth: !!isAuth,
+        isGoogleAuth: !!isGoogleAuth,
+        isGithubAuth: !!isGithubAuth,
       })
       .returning();
+
+    if (techStackIds && Array.isArray(techStackIds) && techStackIds.length > 0) {
+      const ids = techStackIds.map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+      if (ids.length > 0) {
+        await db
+          .update(techStack)
+          .set({ projectId: newProject[0].id })
+          .where(inArray(techStack.id, ids));
+      }
+    }
 
     return NextResponse.json(newProject[0]);
   } catch (error) {

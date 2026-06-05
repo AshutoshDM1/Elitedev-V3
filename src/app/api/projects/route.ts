@@ -13,6 +13,7 @@ export async function GET() {
       .select({
         projectId: frontend.projectId,
         techStackName: techStack.name,
+        repoUrl: frontend.repoUrl,
       })
       .from(frontend)
       .leftJoin(techStack, eq(frontend.techStackId, techStack.id));
@@ -22,6 +23,7 @@ export async function GET() {
       .select({
         projectId: backend.projectId,
         techStackName: techStack.name,
+        repoUrl: backend.repoUrl,
       })
       .from(backend)
       .leftJoin(techStack, eq(backend.techStackId, techStack.id));
@@ -41,10 +43,16 @@ export async function GET() {
       const uniqueTags = Array.from(new Set([...feStacks, ...beStacks]));
       const tagsString = uniqueTags.join(", ");
 
+      const clientRepoVal = frontends.find((f) => f.projectId === proj.id && f.repoUrl)?.repoUrl || null;
+      const serverRepoVal = backends.find((b) => b.projectId === proj.id && b.repoUrl)?.repoUrl || null;
+
       return {
         ...proj,
+        isActive: proj.isActivelyMaintining,
         image: proj.projectImage,
         tags: tagsString,
+        clientRepo: clientRepoVal,
+        serverRepo: serverRepoVal,
       };
     });
 

@@ -22,6 +22,7 @@ import {
 } from "@/hooks/useManage";
 import AutosearchSelect from "./AutosearchSelect";
 import ImageUpload from "./ImageUpload";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface TechStackDialogProps {
   stackToEdit?: TechStack;
@@ -132,15 +133,16 @@ export default function TechStackDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-md w-full p-6 shadow-md">
-        <DialogHeader>
-          <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
-            {stackToEdit ? "Edit Tech Stack" : "Add Tech Stack"}
-          </DialogTitle>
-          <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
-            {stackToEdit ? "Modify existing tech stack properties" : "Register a new technology stack element"}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg sm:max-w-2xl w-full p-6 shadow-md">
+        <ScrollArea className="max-h-[80vh] pr-5">
+          <DialogHeader>
+            <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
+              {stackToEdit ? "Edit Tech Stack" : "Add Tech Stack"}
+            </DialogTitle>
+            <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+              {stackToEdit ? "Modify existing tech stack properties" : "Register a new technology stack element"}
+            </DialogDescription>
+          </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 my-2 text-left">
           <div className="space-y-1.5">
             <Label htmlFor="name" className="text-xs font-medium text-foreground">
@@ -304,6 +306,7 @@ export default function TechStackDialog({
             </Button>
           </DialogFooter>
         </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

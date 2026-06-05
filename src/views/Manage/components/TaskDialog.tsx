@@ -21,6 +21,14 @@ import {
   ProjectTask,
 } from "@/hooks/useManage";
 import AutosearchSelect from "./AutosearchSelect";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface TaskDialogProps {
   taskToEdit?: ProjectTask;
@@ -122,15 +130,16 @@ export default function TaskDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-sm w-full p-6 shadow-md">
-        <DialogHeader>
-          <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
-            {taskToEdit ? "Edit Task" : "Add Task"}
-          </DialogTitle>
-          <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
-            {taskToEdit ? "Modify existing project task registry" : "Register a new project todo"}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg sm:max-w-2xl w-full p-6 shadow-md">
+        <ScrollArea className="max-h-[80vh] pr-5">
+          <DialogHeader>
+            <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
+              {taskToEdit ? "Edit Task" : "Add Task"}
+            </DialogTitle>
+            <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+              {taskToEdit ? "Modify existing project task registry" : "Register a new project todo"}
+            </DialogDescription>
+          </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 my-2 text-left">
           <div className="space-y-1.5 flex flex-col justify-end">
             <Label className="text-xs font-medium text-foreground mb-1.5">
@@ -176,33 +185,39 @@ export default function TaskDialog({
               <Label htmlFor="task-status" className="text-xs font-medium text-foreground">
                 Task Status
               </Label>
-              <select
-                id="task-status"
+              <Select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus:border-foreground text-sm p-2 h-9 text-foreground focus:outline-none"
+                onValueChange={setStatus}
               >
-                <option value="todo" className="bg-background">TODO</option>
-                <option value="in_progress" className="bg-background">IN PROGRESS</option>
-                <option value="done" className="bg-background">DONE</option>
-                <option value="backlog" className="bg-background">BACKLOG</option>
-              </select>
+                <SelectTrigger className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 text-xs h-9">
+                  <SelectValue placeholder="Select Status" />
+                </SelectTrigger>
+                <SelectContent className="border border-zinc-200 dark:border-zinc-800 bg-popover rounded-none">
+                  <SelectItem value="todo">TODO</SelectItem>
+                  <SelectItem value="in_progress">IN PROGRESS</SelectItem>
+                  <SelectItem value="done">DONE</SelectItem>
+                  <SelectItem value="backlog">BACKLOG</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-1.5">
               <Label htmlFor="task-priority" className="text-xs font-medium text-foreground">
                 Priority
               </Label>
-              <select
-                id="task-priority"
+              <Select
                 value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus:border-foreground text-sm p-2 h-9 text-foreground focus:outline-none"
+                onValueChange={setPriority}
               >
-                <option value="low" className="bg-background">LOW</option>
-                <option value="medium" className="bg-background">MEDIUM</option>
-                <option value="high" className="bg-background">HIGH</option>
-              </select>
+                <SelectTrigger className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 text-xs h-9">
+                  <SelectValue placeholder="Select Priority" />
+                </SelectTrigger>
+                <SelectContent className="border border-zinc-200 dark:border-zinc-800 bg-popover rounded-none">
+                  <SelectItem value="low">LOW</SelectItem>
+                  <SelectItem value="medium">MEDIUM</SelectItem>
+                  <SelectItem value="high">HIGH</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -229,6 +244,7 @@ export default function TaskDialog({
             </Button>
           </DialogFooter>
         </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

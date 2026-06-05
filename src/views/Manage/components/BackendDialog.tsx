@@ -23,6 +23,14 @@ import {
   Backend,
 } from "@/hooks/useManage";
 import AutosearchSelect from "./AutosearchSelect";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface BackendDialogProps {
   backendToEdit?: Backend;
@@ -47,7 +55,6 @@ export default function BackendDialog({
   const [deploymentPlatform, setDeploymentPlatform] = React.useState("");
   const [isCliTool, setIsCliTool] = React.useState(false);
   const [npmVersion, setNpmVersion] = React.useState(false); // maps to is_server_less
-  const [serverRepo, setServerRepo] = React.useState("");
   const [isMonorepo, setIsMonorepo] = React.useState(false);
   const [repoUrl, setRepoUrl] = React.useState("");
   const [rootPath, setRootPath] = React.useState("");
@@ -78,11 +85,10 @@ export default function BackendDialog({
         setDeploymentPlatform(backendToEdit.deploymentPlatform || "");
         setIsCliTool(backendToEdit.isCliTool);
         setNpmVersion(backendToEdit.npmVersion);
-        setServerRepo(backendToEdit.serverRepo || "");
         setIsMonorepo(backendToEdit.isMonorepo);
         setRepoUrl(backendToEdit.repoUrl || "");
         setRootPath(backendToEdit.rootPath || "");
-        setIsActive(backendToEdit.isActive);
+        setIsActive(backendToEdit.isActivelyMaintining);
         setStatus(backendToEdit.status || "unknown");
         setStars(backendToEdit.stars.toString());
         setForks(backendToEdit.forks.toString());
@@ -100,7 +106,6 @@ export default function BackendDialog({
         setDeploymentPlatform("");
         setIsCliTool(false);
         setNpmVersion(false);
-        setServerRepo("");
         setIsMonorepo(false);
         setRepoUrl("");
         setRootPath("");
@@ -147,11 +152,10 @@ export default function BackendDialog({
       deploymentPlatform: deploymentPlatform.trim() || null,
       isCliTool,
       npmVersion,
-      serverRepo: serverRepo.trim() || null,
       isMonorepo,
       repoUrl: repoUrl.trim() || null,
       rootPath: rootPath.trim() || null,
-      isActive,
+      isActivelyMaintining: isActive,
       status,
       stars: parseInt(stars, 10) || 0,
       forks: parseInt(forks, 10) || 0,
@@ -188,11 +192,12 @@ export default function BackendDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg w-full p-6 shadow-md overflow-y-auto max-h-[90vh]">
-        <DialogHeader>
-          <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
-            {backendToEdit ? "Edit Backend Stack" : "Add Backend Stack"}
-          </DialogTitle>
+      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg sm:max-w-2xl w-full p-6 shadow-md">
+        <ScrollArea className="max-h-[80vh] pr-5">
+          <DialogHeader>
+            <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
+              {backendToEdit ? "Edit Backend Stack" : "Add Backend Stack"}
+            </DialogTitle>
           <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
             {backendToEdit ? "Modify existing backend deployment stack" : "Register a new backend service"}
           </DialogDescription>
@@ -297,43 +302,29 @@ export default function BackendDialog({
               />
             </div>
 
-            {isMonorepo ? (
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="be-repourl" className="text-xs font-medium text-foreground">
-                    Monorepo GitHub URL
-                  </Label>
-                  <Input
-                    id="be-repourl"
-                    placeholder="e.g. https://github.com/user/repo"
-                    value={repoUrl}
-                    onChange={(e) => setRepoUrl(e.target.value)}
-                    className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="be-root" className="text-xs font-medium text-foreground">
-                    Root Path inside repo
-                  </Label>
-                  <Input
-                    id="be-root"
-                    placeholder="e.g. apps/api"
-                    value={rootPath}
-                    onChange={(e) => setRootPath(e.target.value)}
-                    className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
-                  />
-                </div>
-              </div>
-            ) : (
+            <div className="space-y-1.5">
+              <Label htmlFor="be-repourl" className="text-xs font-medium text-foreground">
+                Repository URL
+              </Label>
+              <Input
+                id="be-repourl"
+                placeholder="e.g. https://github.com/user/repo"
+                value={repoUrl}
+                onChange={(e) => setRepoUrl(e.target.value)}
+                className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
+              />
+            </div>
+
+            {isMonorepo && (
               <div className="space-y-1.5">
-                <Label htmlFor="be-server" className="text-xs font-medium text-foreground">
-                  Server Repository URL
+                <Label htmlFor="be-root" className="text-xs font-medium text-foreground">
+                  Root Path inside repo
                 </Label>
                 <Input
-                  id="be-server"
-                  placeholder="e.g. https://github.com/user/api"
-                  value={serverRepo}
-                  onChange={(e) => setServerRepo(e.target.value)}
+                  id="be-root"
+                  placeholder="e.g. apps/api"
+                  value={rootPath}
+                  onChange={(e) => setRootPath(e.target.value)}
                   className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
                 />
               </div>
@@ -422,17 +413,20 @@ export default function BackendDialog({
               <Label htmlFor="be-status" className="text-xs font-medium text-foreground">
                 Service Status
               </Label>
-              <select
-                id="be-status"
+              <Select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus:border-foreground text-sm p-2 h-9 text-foreground focus:outline-none"
+                onValueChange={setStatus}
               >
-                <option value="unknown" className="bg-background">UNKNOWN</option>
-                <option value="UP" className="bg-background">UP (HEALTHY)</option>
-                <option value="DOWN" className="bg-background">DOWN (OFFLINE)</option>
-                <option value="DEGRADED" className="bg-background">DEGRADED</option>
-              </select>
+                <SelectTrigger className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 text-xs h-9">
+                  <SelectValue placeholder="Select Status" />
+                </SelectTrigger>
+                <SelectContent className="border border-zinc-200 dark:border-zinc-800 bg-popover rounded-none">
+                  <SelectItem value="unknown">UNKNOWN</SelectItem>
+                  <SelectItem value="UP">UP (HEALTHY)</SelectItem>
+                  <SelectItem value="DOWN">DOWN (OFFLINE)</SelectItem>
+                  <SelectItem value="DEGRADED">DEGRADED</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-1.5">
@@ -498,6 +492,7 @@ export default function BackendDialog({
             </Button>
           </DialogFooter>
         </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

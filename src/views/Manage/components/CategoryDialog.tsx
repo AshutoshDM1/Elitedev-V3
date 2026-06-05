@@ -18,6 +18,7 @@ import {
   useUpdateTechCategory,
   TechCategory,
 } from "@/hooks/useManage";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface CategoryDialogProps {
   categoryToEdit?: TechCategory;
@@ -84,15 +85,16 @@ export default function CategoryDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-sm w-full p-6 shadow-md">
-        <DialogHeader>
-          <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
-            {categoryToEdit ? "Edit Category" : "Add Category"}
-          </DialogTitle>
-          <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
-            {categoryToEdit ? "Modify existing category name" : "Register a new category group"}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg sm:max-w-2xl w-full p-6 shadow-md">
+        <ScrollArea className="max-h-[80vh] pr-5">
+          <DialogHeader>
+            <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
+              {categoryToEdit ? "Edit Category" : "Add Category"}
+            </DialogTitle>
+            <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+              {categoryToEdit ? "Modify existing category name" : "Register a new category group"}
+            </DialogDescription>
+          </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 my-2 text-left">
           <div className="space-y-1.5">
             <Label htmlFor="cat-name" className="text-xs font-medium text-foreground">
@@ -118,6 +120,7 @@ export default function CategoryDialog({
             </Button>
           </DialogFooter>
         </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

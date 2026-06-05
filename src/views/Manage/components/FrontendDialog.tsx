@@ -23,6 +23,14 @@ import {
   Frontend,
 } from "@/hooks/useManage";
 import AutosearchSelect from "./AutosearchSelect";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FrontendDialogProps {
   frontendToEdit?: Frontend;
@@ -40,7 +48,6 @@ export default function FrontendDialog({
   const [description, setDescription] = React.useState("");
   const [techStackId, setTechStackId] = React.useState("");
   const [liveUrl, setLiveUrl] = React.useState("");
-  const [clientRepo, setClientRepo] = React.useState("");
   const [isMonorepo, setIsMonorepo] = React.useState(false);
   const [repoUrl, setRepoUrl] = React.useState("");
   const [rootPath, setRootPath] = React.useState("");
@@ -67,11 +74,10 @@ export default function FrontendDialog({
         setDescription(frontendToEdit.description);
         setTechStackId(frontendToEdit.techStackId?.toString() || "");
         setLiveUrl(frontendToEdit.liveUrl || "");
-        setClientRepo(frontendToEdit.clientRepo || "");
         setIsMonorepo(frontendToEdit.isMonorepo);
         setRepoUrl(frontendToEdit.repoUrl || "");
         setRootPath(frontendToEdit.rootPath || "");
-        setIsActive(frontendToEdit.isActive);
+        setIsActive(frontendToEdit.isActivelyMaintining);
         setDeploymentPlatform(frontendToEdit.deploymentPlatform || "");
         setCicd(frontendToEdit.cicd);
         setCicdTool(frontendToEdit.cicdTool || "");
@@ -85,7 +91,6 @@ export default function FrontendDialog({
         setDescription("");
         setTechStackId("");
         setLiveUrl("");
-        setClientRepo("");
         setIsMonorepo(false);
         setRepoUrl("");
         setRootPath("");
@@ -128,11 +133,10 @@ export default function FrontendDialog({
       description: description.trim(),
       techStackId: techStackId ? parseInt(techStackId, 10) : null,
       liveUrl: liveUrl.trim() || null,
-      clientRepo: clientRepo.trim() || null,
       isMonorepo,
       repoUrl: repoUrl.trim() || null,
       rootPath: rootPath.trim() || null,
-      isActive,
+      isActivelyMaintining: isActive,
       deploymentPlatform: deploymentPlatform.trim() || null,
       cicd,
       cicdTool: cicdTool.trim() || null,
@@ -172,11 +176,12 @@ export default function FrontendDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg w-full p-6 shadow-md overflow-y-auto max-h-[90vh]">
-        <DialogHeader>
-          <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
-            {frontendToEdit ? "Edit Frontend Stack" : "Add Frontend Stack"}
-          </DialogTitle>
+      <DialogContent className="border border-zinc-200 dark:border-zinc-800 rounded-none bg-background max-w-lg sm:max-w-2xl w-full p-6 shadow-md">
+        <ScrollArea className="max-h-[80vh] pr-5">
+          <DialogHeader>
+            <DialogTitle className="font-sans text-lg font-semibold tracking-tight text-foreground">
+              {frontendToEdit ? "Edit Frontend Stack" : "Add Frontend Stack"}
+            </DialogTitle>
           <DialogDescription className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
             {frontendToEdit ? "Modify existing frontend deployment stack" : "Register a new frontend service"}
           </DialogDescription>
@@ -281,43 +286,29 @@ export default function FrontendDialog({
               />
             </div>
 
-            {isMonorepo ? (
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="fe-repourl" className="text-xs font-medium text-foreground">
-                    Monorepo GitHub URL
-                  </Label>
-                  <Input
-                    id="fe-repourl"
-                    placeholder="e.g. https://github.com/user/repo"
-                    value={repoUrl}
-                    onChange={(e) => setRepoUrl(e.target.value)}
-                    className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="fe-root" className="text-xs font-medium text-foreground">
-                    Root Path inside repo
-                  </Label>
-                  <Input
-                    id="fe-root"
-                    placeholder="e.g. apps/web"
-                    value={rootPath}
-                    onChange={(e) => setRootPath(e.target.value)}
-                    className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
-                  />
-                </div>
-              </div>
-            ) : (
+            <div className="space-y-1.5">
+              <Label htmlFor="fe-repourl" className="text-xs font-medium text-foreground">
+                Repository URL
+              </Label>
+              <Input
+                id="fe-repourl"
+                placeholder="e.g. https://github.com/user/repo"
+                value={repoUrl}
+                onChange={(e) => setRepoUrl(e.target.value)}
+                className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
+              />
+            </div>
+
+            {isMonorepo && (
               <div className="space-y-1.5">
-                <Label htmlFor="fe-client" className="text-xs font-medium text-foreground">
-                  Client Repository URL
+                <Label htmlFor="fe-root" className="text-xs font-medium text-foreground">
+                  Root Path inside repo
                 </Label>
                 <Input
-                  id="fe-client"
-                  placeholder="e.g. https://github.com/user/client"
-                  value={clientRepo}
-                  onChange={(e) => setClientRepo(e.target.value)}
+                  id="fe-root"
+                  placeholder="e.g. apps/web"
+                  value={rootPath}
+                  onChange={(e) => setRootPath(e.target.value)}
                   className="rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground text-sm h-9"
                 />
               </div>
@@ -358,17 +349,20 @@ export default function FrontendDialog({
               <Label htmlFor="fe-status" className="text-xs font-medium text-foreground">
                 Service Status
               </Label>
-              <select
-                id="fe-status"
+              <Select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 focus:border-foreground text-sm p-2 h-9 text-foreground focus:outline-none"
+                onValueChange={setStatus}
               >
-                <option value="unknown" className="bg-background">UNKNOWN</option>
-                <option value="UP" className="bg-background">UP (HEALTHY)</option>
-                <option value="DOWN" className="bg-background">DOWN (OFFLINE)</option>
-                <option value="DEGRADED" className="bg-background">DEGRADED</option>
-              </select>
+                <SelectTrigger className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-background/50 text-xs h-9">
+                  <SelectValue placeholder="Select Status" />
+                </SelectTrigger>
+                <SelectContent className="border border-zinc-200 dark:border-zinc-800 bg-popover rounded-none">
+                  <SelectItem value="unknown">UNKNOWN</SelectItem>
+                  <SelectItem value="UP">UP (HEALTHY)</SelectItem>
+                  <SelectItem value="DOWN">DOWN (OFFLINE)</SelectItem>
+                  <SelectItem value="DEGRADED">DEGRADED</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-1.5">
@@ -434,6 +428,7 @@ export default function FrontendDialog({
             </Button>
           </DialogFooter>
         </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

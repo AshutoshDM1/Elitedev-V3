@@ -38,7 +38,7 @@ export const techStack = pgTable("tech_stack", {
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  description: text("description").notNull(),
+  description: text("description").notNull(), // will be .md format
   shortDescription: text("short_description").notNull(),
   projectImage: varchar("image", { length: 255 }).notNull(),
   techCategoryId: integer("tech_category_id").references(
@@ -48,14 +48,27 @@ export const projects = pgTable("projects", {
     },
   ),
   liveUrl: varchar("live_url", { length: 255 }),
-  frontendRepo: varchar("frontend_repo", { length: 255 }),
-  backendRepo: varchar("backend_repo", { length: 255 }),
   isMonorepo: boolean("is_monorepo").notNull().default(false),
   repoUrl: varchar("repo_url", { length: 255 }),
   backgroundImage: varchar("background_image", { length: 255 }).default(
     "background.jpg",
   ),
-  isActive: boolean("is_active").notNull().default(true),
+  isActivelyMaintining: boolean("is_actively_maintining")
+    .notNull()
+    .default(true), // If project is actively maintained or not
+
+  // Project feature flags
+  islatestReadme: boolean("latest_readme").notNull().default(false),
+  isCustomDomain: boolean("custom_domain").notNull().default(false),
+  isSelfHostingDatabase: boolean("self_hosted_database")
+    .notNull()
+    .default(false),
+  isNeonDatabase: boolean("neon_database").notNull().default(false),
+  isLLDAvailable: boolean("lld_available").notNull().default(false),
+  isAuth: boolean("is_auth").notNull().default(false),
+  isGoogleAuth: boolean("google_auth").notNull().default(false),
+  isGithubAuth: boolean("github_auth").notNull().default(false),
+
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -71,11 +84,12 @@ export const frontend = pgTable("frontend", {
     onDelete: "cascade",
   }),
   liveUrl: varchar("live_url", { length: 255 }),
-  clientRepo: varchar("client_repo", { length: 255 }),
-  isMonorepo: boolean("is_monorepo").notNull().default(false),
   repoUrl: varchar("repo_url", { length: 255 }),
+  isMonorepo: boolean("is_monorepo").notNull().default(false),
   rootPath: varchar("root_path", { length: 255 }), // directory path inside monorepo, e.g. 'apps/web'
-  isActive: boolean("is_active").notNull().default(true),
+  isActivelyMaintining: boolean("is_actively_maintining")
+    .notNull()
+    .default(true), // If project is actively maintained or not
   deploymentPlatform: varchar("deployment_platform", { length: 255 }),
   cicd: boolean("cicd").notNull().default(true),
   cicdTool: varchar("cicd_tool", { length: 255 }),
@@ -107,13 +121,15 @@ export const backend = pgTable("backend", {
   containerizationTool: varchar("containerization_tool", { length: 255 }),
   deploymentPlatform: varchar("deployment_platform", { length: 255 }),
   isCliTool: boolean("is_cli_tool").notNull().default(true),
-  npmVersion: boolean("is_server_less").notNull().default(true),
-  serverRepo: varchar("server_repo", { length: 255 }),
-  isMonorepo: boolean("is_monorepo").notNull().default(false),
+  npmVersion: boolean("npm_version").notNull().default(true),
   repoUrl: varchar("repo_url", { length: 255 }),
+  isMonorepo: boolean("is_monorepo").notNull().default(false),
   rootPath: varchar("root_path", { length: 255 }), // directory path inside monorepo, e.g. 'apps/api'
-  isActive: boolean("is_active").notNull().default(true),
+  isActivelyMaintining: boolean("is_actively_maintining")
+    .notNull()
+    .default(true), // If project is actively maintained or not
   status: varchar("status", { length: 50 }).notNull().default("unknown"), // 'UP', 'DOWN', 'DEGRADED', 'UNKNOWN'
+
   // GitHub stats metadata
   stars: integer("stars").notNull().default(0),
   forks: integer("forks").notNull().default(0),

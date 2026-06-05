@@ -36,6 +36,7 @@ export interface UnifiedProject {
   // Indicators
   isMonorepo?: boolean;
   isActive?: boolean;
+  isActivelyMaintining?: boolean;
   status?: string;
   pinned?: boolean;
   topLabel?: string;
@@ -97,16 +98,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const topLabel = project.topLabel || `#${project.id}`;
 
   // 6. Resolve Status
-  const statusText = project.status || (project.isActive !== undefined ? (project.isActive ? "Active" : "Archived") : undefined);
+  const activeStatus = project.isActivelyMaintining !== undefined ? project.isActivelyMaintining : project.isActive;
+  const statusText = project.status || (activeStatus !== undefined ? (activeStatus ? "Active" : "Archived") : undefined);
   const isStatusGreen = statusText === "Live" || statusText === "Active" || statusText === "Building";
 
   // 7. Resolve Description
   const description = project.description || project.shortDescription || "";
 
   // 8. Resolve Link Details
-  // If it's a database project (we check if isActive is defined), we link to its detail page.
+  // If it's a database project (we check if activeStatus is defined), we link to its detail page.
   // Otherwise, we link directly to its liveUrl / liveLink.
-  const isDbProject = project.isActive !== undefined;
+  const isDbProject = activeStatus !== undefined;
   const detailsHref = isDbProject ? `/projects/${project.id}` : (project.liveLink || project.liveUrl || "#");
   const detailsLabel = isDbProject ? "View Details" : "View Project";
 

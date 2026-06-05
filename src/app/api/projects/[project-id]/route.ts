@@ -39,11 +39,10 @@ export async function GET(
         techStackId: frontend.techStackId,
         techStackName: techStack.name,
         liveUrl: frontend.liveUrl,
-        clientRepo: frontend.clientRepo,
         isMonorepo: frontend.isMonorepo,
         repoUrl: frontend.repoUrl,
         rootPath: frontend.rootPath,
-        isActive: frontend.isActive,
+        isActive: frontend.isActivelyMaintining,
         deploymentPlatform: frontend.deploymentPlatform,
         cicd: frontend.cicd,
         cicdTool: frontend.cicdTool,
@@ -81,11 +80,10 @@ export async function GET(
         deploymentPlatform: backend.deploymentPlatform,
         isCliTool: backend.isCliTool,
         npmVersion: backend.npmVersion,
-        serverRepo: backend.serverRepo,
         isMonorepo: backend.isMonorepo,
         repoUrl: backend.repoUrl,
         rootPath: backend.rootPath,
-        isActive: backend.isActive,
+        isActive: backend.isActivelyMaintining,
         status: backend.status,
         stars: backend.stars,
         forks: backend.forks,
@@ -116,10 +114,16 @@ export async function GET(
     const uniqueTags = Array.from(new Set([...feTags, ...beTags]));
     const tagsString = uniqueTags.join(", ");
 
+    const clientRepoVal = frontends.find((f) => f.repoUrl)?.repoUrl || null;
+    const serverRepoVal = backends.find((b) => b.repoUrl)?.repoUrl || null;
+
     const projectWithTags = {
       ...project,
+      isActive: project.isActivelyMaintining,
       image: project.projectImage,
       tags: tagsString,
+      clientRepo: clientRepoVal,
+      serverRepo: serverRepoVal,
     };
 
     return NextResponse.json({

@@ -7,12 +7,18 @@ export interface Project {
   image: string;
   tags: string;
   liveUrl: string | null;
-  clientRepo: string | null;
-  serverRepo: string | null;
   isMonorepo: boolean;
   repoUrl: string | null;
   backgroundImage: string | null;
-  isActive: boolean;
+  isActivelyMaintining: boolean;
+  islatestReadme: boolean;
+  isCustomDomain: boolean;
+  isSelfHostingDatabase: boolean;
+  isNeonDatabase: boolean;
+  isLLDAvailable: boolean;
+  isAuth: boolean;
+  isGoogleAuth: boolean;
+  isGithubAuth: boolean;
   createdAt: string;
   updatedAt: string;
 }

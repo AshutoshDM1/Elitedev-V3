@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Edit2, Trash2, Search, Plus, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
+import ErrorComponent from "@/Shared/Error/Error";
 
 import {
   // Hooks & Types
@@ -87,7 +88,7 @@ function ConfirmDelete({
 // 1. Projects Table Component
 // ==========================================
 export function ProjectsTable() {
-  const { data: projects = [], isLoading } = useGetAdminProjects();
+  const { data: projects = [], isLoading, isError, error, refetch } = useGetAdminProjects();
   const deleteMutation = useDeleteProject();
 
   const [search, setSearch] = React.useState("");
@@ -118,6 +119,15 @@ export function ProjectsTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING PROJECTS...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load projects"
+        message={error instanceof Error ? error.message : "An error occurred while fetching project records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -182,8 +192,8 @@ export function ProjectsTable() {
                     {proj.isMonorepo ? "Monorepo" : "Split (Client/Server)"}
                   </TableCell>
                   <TableCell>
-                    <Badge variant={proj.isActive ? "default" : "secondary"} className="rounded-none font-mono text-[8px] uppercase">
-                      {proj.isActive ? "Active" : "Archived"}
+                    <Badge variant={proj.isActivelyMaintining ? "default" : "secondary"} className="rounded-none font-mono text-[8px] uppercase">
+                      {proj.isActivelyMaintining ? "Active" : "Archived"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -228,7 +238,7 @@ export function ProjectsTable() {
 // 2. Frontend Stacks Table Component
 // ==========================================
 export function FrontendsTable() {
-  const { data: frontends = [], isLoading } = useGetFrontends();
+  const { data: frontends = [], isLoading, isError, error, refetch } = useGetFrontends();
   const deleteMutation = useDeleteFrontend();
 
   const [search, setSearch] = React.useState("");
@@ -259,6 +269,15 @@ export function FrontendsTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING FRONTENDS...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load frontends"
+        message={error instanceof Error ? error.message : "An error occurred while fetching frontend stack records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -379,7 +398,7 @@ export function FrontendsTable() {
 // 3. Backend Stacks Table Component
 // ==========================================
 export function BackendsTable() {
-  const { data: backends = [], isLoading } = useGetBackends();
+  const { data: backends = [], isLoading, isError, error, refetch } = useGetBackends();
   const deleteMutation = useDeleteBackend();
 
   const [search, setSearch] = React.useState("");
@@ -410,6 +429,15 @@ export function BackendsTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING BACKENDS...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load backends"
+        message={error instanceof Error ? error.message : "An error occurred while fetching backend stack records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -537,7 +565,7 @@ export function BackendsTable() {
 // 4. Tech Stack Table Component
 // ==========================================
 export function TechStacksTable() {
-  const { data: techStacks = [], isLoading } = useGetTechStacks();
+  const { data: techStacks = [], isLoading, isError, error, refetch } = useGetTechStacks();
   const deleteMutation = useDeleteTechStack();
 
   const [search, setSearch] = React.useState("");
@@ -568,6 +596,15 @@ export function TechStacksTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING TECH STACKS...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load tech stacks"
+        message={error instanceof Error ? error.message : "An error occurred while fetching tech stack records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -704,7 +741,7 @@ export function TechStacksTable() {
 // 5. Categories Table Component
 // ==========================================
 export function CategoriesTable() {
-  const { data: categories = [], isLoading } = useGetTechCategories();
+  const { data: categories = [], isLoading, isError, error, refetch } = useGetTechCategories();
   const deleteMutation = useDeleteTechCategory();
 
   const [search, setSearch] = React.useState("");
@@ -731,6 +768,15 @@ export function CategoriesTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING CATEGORIES...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load categories"
+        message={error instanceof Error ? error.message : "An error occurred while fetching category records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -818,7 +864,7 @@ export function CategoriesTable() {
 // 6. Project Tasks Table Component
 // ==========================================
 export function TasksTable() {
-  const { data: tasks = [], isLoading } = useGetProjectTasks();
+  const { data: tasks = [], isLoading, isError, error, refetch } = useGetProjectTasks();
   const deleteMutation = useDeleteProjectTask();
 
   const [search, setSearch] = React.useState("");
@@ -849,6 +895,15 @@ export function TasksTable() {
   };
 
   if (isLoading) return <div className="text-center font-mono text-xs text-muted-foreground py-8">LOADING PROJECT TASKS...</div>;
+  if (isError) {
+    return (
+      <ErrorComponent
+        title="Failed to load project tasks"
+        message={error instanceof Error ? error.message : "An error occurred while fetching project task records."}
+        onRetry={() => refetch()}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">

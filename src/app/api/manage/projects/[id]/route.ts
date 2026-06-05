@@ -1,6 +1,6 @@
 import db from "@/db/db";
-import { projects } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { projects, techStack } from "@/db/schema";
+import { eq, inArray, notInArray, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function PUT(
@@ -23,12 +23,19 @@ export async function PUT(
       projectImage,
       techCategoryId,
       liveUrl,
-      frontendRepo,
-      backendRepo,
       isMonorepo,
       repoUrl,
       backgroundImage,
-      isActive,
+      isActivelyMaintining,
+      islatestReadme,
+      isCustomDomain,
+      isSelfHostingDatabase,
+      isNeonDatabase,
+      isLLDAvailable,
+      isAuth,
+      isGoogleAuth,
+      isGithubAuth,
+      techStackIds,
     } = body;
 
     if (!title || !description || !shortDescription || !projectImage) {
@@ -47,12 +54,18 @@ export async function PUT(
         projectImage,
         techCategoryId: techCategoryId ? parseInt(techCategoryId, 10) : null,
         liveUrl: liveUrl || null,
-        frontendRepo: frontendRepo || null,
-        backendRepo: backendRepo || null,
         isMonorepo: !!isMonorepo,
         repoUrl: repoUrl || null,
         backgroundImage: backgroundImage || "background.jpg",
-        isActive: isActive !== undefined ? !!isActive : true,
+        isActivelyMaintining: isActivelyMaintining !== undefined ? !!isActivelyMaintining : true,
+        islatestReadme: !!islatestReadme,
+        isCustomDomain: !!isCustomDomain,
+        isSelfHostingDatabase: !!isSelfHostingDatabase,
+        isNeonDatabase: !!isNeonDatabase,
+        isLLDAvailable: !!isLLDAvailable,
+        isAuth: !!isAuth,
+        isGoogleAuth: !!isGoogleAuth,
+        isGithubAuth: !!isGithubAuth,
         updatedAt: new Date(),
       })
       .where(eq(projects.id, projectId))
@@ -60,6 +73,33 @@ export async function PUT(
 
     if (updated.length === 0) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+
+    if (techStackIds && Array.isArray(techStackIds)) {
+      const ids = techStackIds.map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+      if (ids.length > 0) {
+        // Reset tech stacks that were associated with this project but are no longer in selected ids
+        await db
+          .update(techStack)
+          .set({ projectId: null })
+          .where(
+            and(
+              eq(techStack.projectId, projectId),
+              notInArray(techStack.id, ids)
+            )
+          );
+        // Link the selected tech stacks to this project
+        await db
+          .update(techStack)
+          .set({ projectId })
+          .where(inArray(techStack.id, ids));
+      } else {
+        // Clear all tech stacks associated with this project
+        await db
+          .update(techStack)
+          .set({ projectId: null })
+          .where(eq(techStack.projectId, projectId));
+      }
     }
 
     return NextResponse.json(updated[0]);

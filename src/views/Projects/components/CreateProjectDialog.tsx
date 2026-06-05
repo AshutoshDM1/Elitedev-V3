@@ -25,8 +25,6 @@ export function CreateProjectDialog() {
   const [imageVal, setImageVal] = React.useState("");
   const [tagsVal, setTagsVal] = React.useState("");
   const [liveUrlVal, setLiveUrlVal] = React.useState("");
-  const [clientRepoVal, setClientRepoVal] = React.useState("");
-  const [serverRepoVal, setServerRepoVal] = React.useState("");
   const [isActiveVal, setIsActiveVal] = React.useState(true);
   const [backgroundImageVal, setBackgroundImageVal] = React.useState("image1");
 
@@ -54,8 +52,6 @@ export function CreateProjectDialog() {
       setImageVal("");
       setTagsVal("");
       setLiveUrlVal("");
-      setClientRepoVal("");
-      setServerRepoVal("");
       setIsActiveVal(true);
       setBackgroundImageVal("image1");
     },
@@ -70,9 +66,7 @@ export function CreateProjectDialog() {
       image: imageVal,
       tags: tagsVal,
       liveUrl: liveUrlVal || null,
-      clientRepo: clientRepoVal || null,
-      serverRepo: serverRepoVal || null,
-      isActive: isActiveVal,
+      isActivelyMaintining: isActiveVal,
       backgroundImage: backgroundImageVal,
     });
   };
@@ -167,52 +161,20 @@ export function CreateProjectDialog() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            <div className="space-y-1">
-              <Label
-                htmlFor="liveUrl"
-                className="font-mono text-[10px] text-muted-foreground uppercase"
-              >
-                live_url
-              </Label>
-              <Input
-                id="liveUrl"
-                placeholder="https://..."
-                value={liveUrlVal}
-                onChange={(e) => setLiveUrlVal(e.target.value)}
-                className="rounded-none border-dashed border-zinc-400 dark:border-zinc-700 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground font-mono text-xs"
-              />
-            </div>
-            <div className="space-y-1">
-              <Label
-                htmlFor="clientRepo"
-                className="font-mono text-[10px] text-muted-foreground uppercase"
-              >
-                client_repo
-              </Label>
-              <Input
-                id="clientRepo"
-                placeholder="https://github..."
-                value={clientRepoVal}
-                onChange={(e) => setClientRepoVal(e.target.value)}
-                className="rounded-none border-dashed border-zinc-400 dark:border-zinc-700 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground font-mono text-xs"
-              />
-            </div>
-            <div className="space-y-1">
-              <Label
-                htmlFor="serverRepo"
-                className="font-mono text-[10px] text-muted-foreground uppercase"
-              >
-                server_repo
-              </Label>
-              <Input
-                id="serverRepo"
-                placeholder="https://github..."
-                value={serverRepoVal}
-                onChange={(e) => setServerRepoVal(e.target.value)}
-                className="rounded-none border-dashed border-zinc-400 dark:border-zinc-700 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground font-mono text-xs"
-              />
-            </div>
+          <div className="space-y-1">
+            <Label
+              htmlFor="liveUrl"
+              className="font-mono text-[10px] text-muted-foreground uppercase"
+            >
+              live_url
+            </Label>
+            <Input
+              id="liveUrl"
+              placeholder="https://..."
+              value={liveUrlVal}
+              onChange={(e) => setLiveUrlVal(e.target.value)}
+              className="rounded-none border-dashed border-zinc-400 dark:border-zinc-700 bg-background/50 focus-visible:ring-0 focus-visible:border-foreground font-mono text-xs"
+            />
           </div>
           <div className="space-y-1">
             <Label

@@ -29,7 +29,7 @@ export default function Manage() {
         {/* Tabbed Registry Sections */}
         <div className="bg-background border border-zinc-200 dark:border-zinc-800 p-6 rounded-none shadow-xs">
           <Tabs defaultValue="projects" className="w-full">
-            <TabsList variant="line" className="w-full justify-start border-b border-zinc-200 dark:border-zinc-800 mb-6 flex-wrap gap-2 pb-[1px] h-auto">
+            <TabsList variant="line" className="w-full justify-start border-b border-zinc-200 dark:border-zinc-800 mb-6 flex-wrap gap-2 pb-px h-auto">
               <TabsTrigger value="projects" className="font-mono uppercase text-[10px] tracking-wider py-2 cursor-pointer">
                 <FolderGit className="w-3.5 h-3.5 mr-1" /> Projects
               </TabsTrigger>
