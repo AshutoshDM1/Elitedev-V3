@@ -18,9 +18,9 @@ export function FontInitializer() {
       const isGlobal =
         localStorage.getItem('morax-global-font-enabled') === 'true';
 
-      if (savedFont && isGlobal) {
+      if (savedFont) {
         loadGoogleFont(savedFont);
-        applyGlobalFont(savedFont, true);
+        applyGlobalFont(savedFont, isGlobal);
       }
     } catch (e) {
       console.error('Failed to initialize dynamic font:', e);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit,  } from "next/font/google";
+import { Outfit, Geist, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Provider from "@/components/Provider";
@@ -7,6 +7,12 @@ import { Analytics } from "@vercel/analytics/next"
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+});
+
+const dm_sans = DM_Sans({
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -24,7 +30,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", outfit.variable,)}
+      className={cn("h-full", "antialiased", outfit.variable, dm_sans.variable)}
     >
       <body
         suppressHydrationWarning

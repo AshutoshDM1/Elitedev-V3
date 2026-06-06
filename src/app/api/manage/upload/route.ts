@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     // Upload the buffer
     const uploadedFile = await aset.upload(buffer, {
       name: file.name,
-      folderId: "abc5d5ca-e2ee-4d95-bbe4-f6d2e0ffc568",
+      folderId: "8b657827-6e83-471a-b674-266abd2e7755",
       contentType: file.type || "application/octet-stream",
     });
 

@@ -115,6 +115,11 @@ export default function PortfolioStudio() {
       return;
     }
 
+    // Retrieve current --font-global value from root element
+    const fontGlobal = typeof window !== 'undefined'
+      ? document.documentElement.style.getPropertyValue('--font-global')
+      : '';
+
     // Create a hidden iframe
     const iframe = document.createElement("iframe");
     iframe.style.position = "absolute";
@@ -150,7 +155,7 @@ export default function PortfolioStudio() {
     doc.open();
     doc.write(`
       <!DOCTYPE html>
-      <html class="${canvasDark ? "dark" : ""}" style="background-color: ${canvasDark ? "#09090b" : "#ffffff"} !important; height: 100%;">
+      <html class="${canvasDark ? "dark" : ""}" style="background-color: ${canvasDark ? "#09090b" : "#ffffff"} !important; height: 100%;${fontGlobal ? ` --font-global: ${fontGlobal};` : ''}">
         <head>
           <title>Portfolio_Resume</title>
           ${stylesHtml}

@@ -7,8 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
   --font-outfit: var(--font-outfit);
-  --font-heading: var(--font-outfit);
+  --font-dm-sans: var(--font-dm-sans);
+  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,6 +50,7 @@
 }
 
 :root {
+  --font-sans: var(--font-global, var(--font-outfit));
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -124,7 +127,7 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-outfit;
+    @apply font-dm-sans;
   }
 }
 

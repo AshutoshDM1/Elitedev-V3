@@ -1,12 +1,15 @@
 import {
   boolean,
   integer,
+  pgEnum,
   pgTable,
   serial,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+
+export const svgThemeEnum = pgEnum("svg_theme", ["light", "dark"]);
 
 // Like Frontend , Backend , Fullstack , DevOps , CI/CD or MERN , PERN , Web3 etc
 export const techCategory = pgTable("tech_category", {
@@ -26,8 +29,10 @@ export const techStack = pgTable("tech_stack", {
       onDelete: "cascade",
     },
   ),
-  logoLight: varchar("logo_light", { length: 255 }).notNull(),
-  logoDark: varchar("logo_dark", { length: 255 }).notNull(),
+  logoLight: varchar("logo_light", { length: 255 }),
+  logoDark: varchar("logo_dark", { length: 255 }),
+  svg: text("svg"), // inline svg code for the tech stack
+  svgTheme: svgThemeEnum("svg_theme").default("dark").notNull(), // theme for the inline svg
   projectId: integer("project_id").references(() => projects.id, {
     onDelete: "cascade",
   }),

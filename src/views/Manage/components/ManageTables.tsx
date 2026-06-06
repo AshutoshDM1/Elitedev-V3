@@ -637,13 +637,14 @@ export function TechStacksTable() {
               <TableHead className="font-mono uppercase text-muted-foreground font-semibold">Name</TableHead>
               <TableHead className="font-mono uppercase text-muted-foreground font-semibold">Category</TableHead>
               <TableHead className="font-mono uppercase text-muted-foreground font-semibold">Logo Presets (Light/Dark)</TableHead>
+              <TableHead className="font-mono uppercase text-muted-foreground font-semibold">Inline SVG</TableHead>
               <TableHead className="w-24 text-right font-mono uppercase text-muted-foreground font-semibold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-6 text-muted-foreground font-mono text-[10px] uppercase">
+                <TableCell colSpan={6} className="text-center py-6 text-muted-foreground font-mono text-[10px] uppercase">
                   No tech stack elements found.
                 </TableCell>
               </TableRow>
@@ -698,6 +699,19 @@ export function TechStacksTable() {
                         <span className="text-[9px] text-muted-foreground font-mono">NO DARK</span>
                       )}
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {t.svg ? (
+                      <div
+                        className={`h-7 w-9 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-0.5 select-none overflow-hidden ${
+                          t.svgTheme === "light" ? "bg-white text-black" : "bg-black text-white"
+                        }`}
+                        title={`SVG Theme: ${t.svgTheme}`}
+                        dangerouslySetInnerHTML={{ __html: t.svg }}
+                      />
+                    ) : (
+                      <span className="text-[9px] text-muted-foreground font-mono">-</span>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-1.5">

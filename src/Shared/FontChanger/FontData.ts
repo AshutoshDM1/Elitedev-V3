@@ -189,7 +189,7 @@ export const applyGlobalFont = (fontName: string, isEnabled: boolean) => {
     'global-font-style',
   ) as HTMLStyleElement | null;
 
-  if (!isEnabled) {
+  if (fontName === 'Inter' && !isEnabled) {
     if (styleTag) {
       styleTag.innerHTML = '';
     }
@@ -203,11 +203,15 @@ export const applyGlobalFont = (fontName: string, isEnabled: boolean) => {
     document.head.appendChild(styleTag);
   }
 
-  // Force apply across the entire web-page elements using standard and high specificity selectors
-  styleTag.innerHTML = `
-    body, html, h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, div, code, pre, label, section, footer, header {
-      font-family: "${fontName}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-    }
-  `;
+  if (!isEnabled) {
+    styleTag.innerHTML = '';
+  } else {
+    // Force apply across the entire web-page elements using standard and high specificity selectors
+    styleTag.innerHTML = `
+      body, html, h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, div, code, pre, label, section, footer, header {
+        font-family: "${fontName}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      }
+    `;
+  }
   document.documentElement.style.setProperty('--font-global', `"${fontName}"`);
 };

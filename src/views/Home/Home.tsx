@@ -6,6 +6,7 @@ import GitHubGraph from "./Folds/Github";
 import Profile from "./Folds/Profile";
 import Project from "./Folds/Project";
 import Quote from "./Folds/Quote";
+import Techstack from "./Folds/TechStack";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Profile />
         <AboutMe />
         <GitHubGraph />
+        <Techstack />
         <Experience />
         <Project />
         <Blogs />

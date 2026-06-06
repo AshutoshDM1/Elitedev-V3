@@ -16,11 +16,39 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, techCategoryId, logoLight, logoDark, projectId } = body;
+    const { name, techCategoryId, logoLight, logoDark, projectId, svg, svgTheme } = body;
 
-    if (!name || !logoLight || !logoDark) {
+    if (!name) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    }
+
+    const hasImages = logoLight?.trim() || logoDark?.trim();
+    const hasSvg = svg?.trim();
+
+    if (!hasImages && !hasSvg) {
       return NextResponse.json(
-        { error: "Name, logoLight, and logoDark are required" },
+        { error: "Either logo images (both logoLight and logoDark) or inline SVG must be provided" },
+        { status: 400 }
+      );
+    }
+
+    if (hasImages && hasSvg) {
+      return NextResponse.json(
+        { error: "Provide either logo images or inline SVG, not both" },
+        { status: 400 }
+      );
+    }
+
+    if (hasImages && (!logoLight?.trim() || !logoDark?.trim())) {
+      return NextResponse.json(
+        { error: "Both logoLight and logoDark must be provided for image logo option" },
+        { status: 400 }
+      );
+    }
+
+    if (hasSvg && (!svgTheme || (svgTheme !== "light" && svgTheme !== "dark"))) {
+      return NextResponse.json(
+        { error: "svgTheme ('light' or 'dark') is required when svg is provided" },
         { status: 400 }
       );
     }
@@ -30,8 +58,10 @@ export async function PUT(
       .set({
         name,
         techCategoryId: techCategoryId ? parseInt(techCategoryId, 10) : null,
-        logoLight,
-        logoDark,
+        logoLight: hasImages ? logoLight.trim() : null,
+        logoDark: hasImages ? logoDark.trim() : null,
+        svg: hasSvg ? svg.trim() : null,
+        svgTheme: hasSvg ? svgTheme : "dark",
         projectId: projectId ? parseInt(projectId, 10) : null,
         updatedAt: new Date(),
       })

@@ -202,7 +202,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-xs text-muted-foreground/90 font-light mt-1.5 px-1 line-clamp-2 leading-relaxed">
+      <p className="text-xs text-foreground mt-1.5 px-1 line-clamp-2 leading-relaxed">
         {description}
       </p>
 

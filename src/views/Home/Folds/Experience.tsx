@@ -141,10 +141,10 @@ const ExperienceCards = ({
           <div className="overflow-hidden">
             {/* Bullet points description */}
             {data.description && data.description.length > 0 && (
-              <ul className="space-y-2 text-sm text-muted-foreground/90 font-light  pl-1">
+              <ul className="space-y-1.5 text-sm text-foreground/80 pl-1">
                 {data.description.map((bullet, index) => (
-                  <li key={index} className="flex items-start gap-2.5">
-                    <span className="w-1 h-1 bg-muted-foreground/80 rounded-full  mt-2 shrink-0" />
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-foreground rounded-full  mt-2 shrink-0" />
                     <span>{bullet}</span>
                   </li>
                 ))}

@@ -13,8 +13,10 @@ export interface TechStack {
   name: string;
   techCategoryId: number | null;
   techCategoryName?: string | null;
-  logoLight: string;
-  logoDark: string;
+  logoLight: string | null;
+  logoDark: string | null;
+  svg: string | null;
+  svgTheme: "light" | "dark";
   projectId: number | null;
   projectTitle?: string | null;
   createdAt: string;
