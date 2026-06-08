@@ -9,44 +9,12 @@ import { cn } from "@/lib/utils";
 import { bg } from "@/assets/import";
 import { GithubIcon } from "@/Shared/Icons/Icons";
 import { Badge } from "@/components/ui/badge";
+import Skills from "@/Shared/Skills/Skills";
 
-export interface UnifiedProject {
-  id: number;
-  // Common text fields
-  title?: string;
-  name?: string;
-  description?: string;
-  shortDescription?: string;
-  // Mockup Images
-  image?: string;
-  projectImage?: string;
-  // Background images
-  backgroundImage?: string | null;
-  background?: StaticImageData | string;
-  // Tags/Skills
-  tags?: string;
-  skills?: string[];
-  // Links
-  liveUrl?: string | null;
-  liveLink?: string;
-  clientRepo?: string | null;
-  serverRepo?: string | null;
-  repoUrl?: string | null;
-  githubLink?: string;
-  // Indicators
-  isMonorepo?: boolean;
-  isActive?: boolean;
-  isActivelyMaintining?: boolean;
-  status?: string;
-  pinned?: boolean;
-  topLabel?: string;
-  startDate?: string;
-  endDate?: string;
-  projectIcon?: string;
-}
+import { Projects } from "@/types/project.types";
 
 interface ProjectCardProps {
-  project: UnifiedProject;
+  project: Projects;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
@@ -66,57 +34,85 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   };
 
   // 1. Resolve Title
-  const title = project.title || project.name || "";
+  const title = project.name;
 
   // 2. Resolve Mockup Image
-  const projectImage = project.image || project.projectImage || "";
+  const projectImage = project.projectImage || "";
 
   // 3. Resolve Background Image
-  const getBgImage = (bgName: string | StaticImageData | null | undefined) => {
-    if (!bgName) return bg.image1;
-    if (typeof bgName !== "string") return bgName; // it's StaticImageData
-    const cleanKey = bgName
-      .replace(/\.(jpg|png|jpeg)$/, "")
-      .replace("/background/", "") as keyof typeof bg;
-    return bg[cleanKey] || bg.image1;
-  };
-  const bgImage = getBgImage(project.backgroundImage || project.background);
+  const bgImage = project.backgroundImage || bg.image5;
 
-  // 4. Resolve Tags / Skills
+  // 4. Resolve Tags / Skills from apps config
   const getTags = () => {
-    if (project.skills && project.skills.length > 0) {
-      return project.skills;
+    const tagsSet = new Set<string>();
+    const addTechStack = (app: any) => {
+      if (app && typeof app === "object" && Array.isArray(app.techStack)) {
+        app.techStack.forEach((tech: string) => tagsSet.add(tech));
+      }
+    };
+    if (project.apps) {
+      addTechStack(project.apps.frontend);
+      addTechStack(project.apps.backend);
+      addTechStack(project.apps.cliTool);
+      addTechStack(project.apps.microService);
+      addTechStack(project.apps.mpcServer);
+      addTechStack(project.apps.sdk);
     }
-    if (project.tags) {
-      return project.tags.split(",").map((t) => t.trim()).filter(Boolean);
-    }
-    return [];
+    return Array.from(tagsSet);
   };
   const tagList = getTags();
 
   // 5. Resolve Top Label
-  const topLabel = project.topLabel || `#${project.id}`;
+  const topLabel = project.status || `#${project.id}`;
 
   // 6. Resolve Status
-  const activeStatus = project.isActivelyMaintining !== undefined ? project.isActivelyMaintining : project.isActive;
-  const statusText = project.status || (activeStatus !== undefined ? (activeStatus ? "Active" : "Archived") : undefined);
-  const isStatusGreen = statusText === "Live" || statusText === "Active" || statusText === "Building";
+  const statusText = project.status;
+
+  // Status Color Mapping
+  const getStatusColor = (status: string | undefined) => {
+    if (!status)
+      return { dot: "bg-zinc-400", text: "text-muted-foreground/80" };
+    switch (status.toLowerCase()) {
+      case "live":
+        return {
+          dot: "bg-emerald-500 animate-pulse",
+          text: "text-emerald-500 font-semibold",
+        };
+      case "building":
+        return {
+          dot: "bg-amber-500 animate-pulse",
+          text: "text-amber-500 font-semibold",
+        };
+      case "completed":
+        return { dot: "bg-blue-500", text: "text-blue-500 font-semibold" };
+      default:
+        return { dot: "bg-zinc-400", text: "text-muted-foreground/80" };
+    }
+  };
+  const statusColors = getStatusColor(statusText);
 
   // 7. Resolve Description
   const description = project.description || project.shortDescription || "";
 
   // 8. Resolve Link Details
-  // If it's a database project (we check if activeStatus is defined), we link to its detail page.
-  // Otherwise, we link directly to its liveUrl / liveLink.
-  const isDbProject = activeStatus !== undefined;
-  const detailsHref = isDbProject ? `/projects/${project.id}` : (project.liveLink || project.liveUrl || "#");
-  const detailsLabel = isDbProject ? "View Details" : "View Project";
+  const detailsHref = project.liveLink || "#";
+  const detailsLabel = "View Project";
 
   // 9. Links for Icons
-  const liveUrl = project.liveUrl || project.liveLink;
-  const monorepoUrl = project.isMonorepo ? (project.repoUrl || project.githubLink) : null;
-  const clientRepo = !project.isMonorepo ? (project.clientRepo || (!project.serverRepo ? project.githubLink : null)) : null;
-  const serverRepo = project.serverRepo || null;
+  const liveUrl = project.liveLink;
+  const isMonorepo = !!project.isMonorepo;
+  const monorepoUrl = isMonorepo ? project.githubLink : null;
+  const clientRepo = !isMonorepo
+    ? typeof project.apps.frontend === "object"
+      ? project.apps.frontend.github
+      : typeof project.apps.cliTool === "object"
+        ? project.apps.cliTool.github
+        : project.githubLink
+    : null;
+  const serverRepo =
+    typeof project.apps.backend === "object"
+      ? project.apps.backend.github
+      : null;
 
   return (
     <div
@@ -128,7 +124,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="relative w-full aspect-video rounded-none border border-border/80 bg-muted/15 p-1 transition-colors duration-300 group-hover:border-border">
         <div className="h-full w-full border rounded-none bg-muted overflow-hidden relative flex justify-center items-end ">
           {/* Top Label */}
-          <span className="absolute top-1.5 group-hover:left-1/2 group-hover:-translate-x-1/2 transition-all duration-300 left-4 text-xs font-mono text-muted-foreground select-none z-20">
+          <span className="absolute top-1.5 group-hover:left-1/2 group-hover:-translate-x-1/2 transition-all duration-300 left-4 text-xs font-mono text-foreground select-none z-20">
             {topLabel}
           </span>
 
@@ -189,13 +185,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {title}
         </h3>
         {statusText && (
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground/80 select-none font-medium">
-            <span
-              className={cn(
-                "size-1.5 rounded-full",
-                isStatusGreen ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
-              )}
-            />
+          <div
+            className={cn(
+              "flex items-center gap-1.5 text-xs select-none font-medium",
+              statusColors.text,
+            )}
+          >
+            <span className={cn("size-1.5 rounded-full", statusColors.dot)} />
             <span>{statusText}</span>
           </div>
         )}
@@ -209,19 +205,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Tech Stack Badges */}
       {tagList.length > 0 && (
         <div className="flex flex-wrap gap-1 px-1 mt-2.5">
-          {tagList.slice(0, 4).map((tag) => (
-            <Badge
-              key={tag}
-              variant="outline"
-              className="font-mono text-[8px] rounded-none py-0 px-1.5 uppercase bg-muted/30 border-foreground/10 text-muted-foreground"
-            >
-              {tag}
-            </Badge>
+          {tagList.slice(0, 9).map((tag) => (
+            <div>
+              <Skills key={tag} name={tag} />
+            </div>
           ))}
           {tagList.length > 4 && (
             <Badge
               variant="outline"
-              className="font-mono text-[8px] rounded-none py-0 px-1.5 bg-muted/10 border-foreground/10 text-muted-foreground/50"
+              className="font-mono text-[8px] rounded-none py-0 px-1.5 bg-muted/10 border-foreground/10 text-muted-foreground/50 self-center"
             >
               +{tagList.length - 4} MORE
             </Badge>

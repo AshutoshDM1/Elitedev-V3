@@ -1,4 +1,5 @@
 import React from "react";
+import TechStackIcon from "@/Shared/TechStackIcon/TechStackIcon";
 
 interface SkillProps {
   name: string;
@@ -7,11 +8,9 @@ interface SkillProps {
 
 const Skills: React.FC<SkillProps> = ({ name = "React", link }) => {
   return (
-    <>
-      <div className="border p-1.5">
-        <p className="text-xs font-light">{name}</p>
-      </div>
-    </>
+    <div className="scale-100" >
+      <TechStackIcon name={name} />
+    </div>
   );
 };
 

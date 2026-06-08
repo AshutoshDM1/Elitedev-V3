@@ -2,116 +2,95 @@
 
 import * as React from "react";
 import SubSection from "@/Shared/Section/SubSection";
-import StackIcon from "tech-stack-icons";
-import { useTheme } from "next-themes";
+import { TechStack } from "@/data/techStack";
+import TechStackIcon from "@/Shared/TechStackIcon/TechStackIcon";
 
-interface TechStackType {
-  id: number;
-  name: string;
-  IconJSX: React.ReactNode;
-}
+const hiddenTechStack = [
+  "Caddy",
+  "HTML",
+  "CSS",
+  "Bash",
+  "Tanstack Query",
+  "Github-Action",
+  "Grok",
+  "Postman",
+  "Cloudinary",
+  "Redux",
+  // "PNPM",
+  "Chat GPT",
+  // "PNPM",
+  // "PNPM",
+  // "PNPM",
+];
+
+const techCategoryOrder = [
+  "Frontend",
+  "Backend",
+  "Database",
+  "Cloud Computing",
+  "DevOps",
+  "CI/CD",
+  "Tool",
+];
+
+// Helper to sort tech stack entries
+const sortTechItems = (
+  a: (typeof TechStack)[0],
+  b: (typeof TechStack)[0],
+  categoryPriorityList: string[],
+) => {
+  // 1. Sort by category priority list first
+  const catA = a.techCategoryName || "";
+  const catB = b.techCategoryName || "";
+
+  const idxA = categoryPriorityList.indexOf(catA);
+  const idxB = categoryPriorityList.indexOf(catB);
+
+  if (idxA !== -1 && idxB !== -1) {
+    if (idxA !== idxB) return idxA - idxB;
+  } else if (idxA !== -1) {
+    return -1;
+  } else if (idxB !== -1) {
+    return 1;
+  } else {
+    const cmp = catA.localeCompare(catB);
+    if (cmp !== 0) return cmp;
+  }
+
+  // 2. Sort by explicit order number (lower numbers first)
+  const hasOrderA = typeof a.order === "number";
+  const hasOrderB = typeof b.order === "number";
+
+  if (hasOrderA && hasOrderB) {
+    if (a.order! !== b.order!) {
+      return a.order! - b.order!;
+    }
+  } else if (hasOrderA) {
+    return -1;
+  } else if (hasOrderB) {
+    return 1;
+  }
+
+  // 3. Sort alphabetically by name
+  return a.name.localeCompare(b.name);
+};
 
 export default function Techstack() {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const groupedTechStack = React.useMemo(() => {
+    const activeTechs = TechStack.filter(
+      (tech) => !hiddenTechStack.includes(tech.name),
+    );
 
-  React.useEffect(() => {
-    setMounted(true);
+    const languages = activeTechs
+      .filter((tech) => tech.techCategoryName === "Language")
+      .sort((a, b) => sortTechItems(a, b, []));
+
+    const technologies = activeTechs
+      .filter((tech) => tech.techCategoryName !== "Language")
+      .sort((a, b) => sortTechItems(a, b, techCategoryOrder));
+
+    return { languages, technologies };
   }, []);
-
-  const isDark = mounted && (
-    theme === "dark" || 
-    (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)
-  );
-
-  const TechStacks: TechStackType[] = [
-    // Languages
-    { id: 1, name: "JavaScript", IconJSX: <StackIcon name="js" className="w-4 h-4" /> },
-    { id: 2, name: "TypeScript", IconJSX: <StackIcon name="typescript" className="w-4 h-4" /> },
-    { id: 3, name: "Python", IconJSX: <StackIcon name="python" className="w-4 h-4" /> },
-    { id: 4, name: "Go", IconJSX: <StackIcon name="go" className="w-4 h-4" /> },
-
-    // Frontend
-    { id: 5, name: "React.js", IconJSX: <StackIcon name="react" className="w-4 h-4" /> },
-    { id: 6, name: "Next.js", IconJSX: <StackIcon name="nextjs" className="w-4 h-4" variant={isDark ? "dark" : "light"} /> },
-    { id: 7, name: "Tailwind", IconJSX: <StackIcon name="tailwindcss" className="w-4 h-4" /> },
-    { id: 8, name: "Motion", IconJSX: <StackIcon name="motion" className="w-4 h-4" /> },
-    { id: 9, name: "Zustand", IconJSX: <StackIcon name="zustand" className="w-4 h-4" /> },
-    { id: 10, name: "Redux Toolkit", IconJSX: <StackIcon name="redux" className="w-4 h-4" /> },
-    { id: 11, name: "Tanstack Query", IconJSX: <StackIcon name="reactquery" className="w-4 h-4" /> },
-
-    // Backend
-    { id: 12, name: "Node", IconJSX: <StackIcon name="nodejs" className="w-4 h-4" /> },
-    { id: 13, name: "Bun", IconJSX: <StackIcon name="bunjs" className="w-4 h-4" /> },
-    { id: 14, name: "Express", IconJSX: <StackIcon name="expressjs" className="w-4 h-4" variant={isDark ? "dark" : "light"} /> },
-    { id: 15, name: "tRPC", IconJSX: <StackIcon name="tRPC" className="w-4 h-4" /> },
-    { id: 16, name: "Prisma", IconJSX: <StackIcon name="prisma" className="w-4 h-4" variant={isDark ? "dark" : "light"} /> },
-    { id: 17, name: "Drizzle", IconJSX: <StackIcon name="drizzle" className="w-4 h-4" /> },
-    { id: 18, name: "Socket.io", IconJSX: <StackIcon name="socketio" className="w-4 h-4" /> },
-    {
-      id: 19,
-      name: "BetterAuth",
-      IconJSX: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4 text-yellow-500"
-        >
-          <circle cx="7.5" cy="15.5" r="5.5"></circle>
-          <path d="m21 2-9.6 9.6"></path>
-          <path d="m15.5 7.5 3 3"></path>
-        </svg>
-      )
-    },
-    { id: 20, name: "Clerk", IconJSX: <StackIcon name="clerk" className="w-4 h-4" /> },
-    { id: 21, name: "Redis", IconJSX: <StackIcon name="redis" className="w-4 h-4" /> },
-
-    // Database
-    { id: 22, name: "PostgreSQL", IconJSX: <StackIcon name="postgresql" className="w-4 h-4" /> },
-    { id: 23, name: "MongoDB", IconJSX: <StackIcon name="mongodb" className="w-4 h-4" /> },
-    { id: 24, name: "MySQL", IconJSX: <StackIcon name="mysql" className="w-4 h-4" /> },
-
-    // DevOps
-    { id: 25, name: "AWS", IconJSX: <StackIcon name="aws" className="w-4 h-4" /> },
-    { id: 26, name: "DigitalOcean", IconJSX: <StackIcon name="digitalocean" className="w-4 h-4" /> },
-    { id: 27, name: "Docker", IconJSX: <StackIcon name="docker" className="w-4 h-4" /> },
-    { id: 28, name: "Nginx", IconJSX: <StackIcon name="nginx" className="w-4 h-4" /> },
-    {
-      id: 29,
-      name: "GitHub Actions",
-      IconJSX: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4 text-blue-500"
-        >
-          <path d="M16 18l6-6-6-6M8 6l-6 6 6 6M12 2v20" />
-        </svg>
-      )
-    },
-    { id: 30, name: "New Relic", IconJSX: <StackIcon name="newrelic" className="w-4 h-4" /> },
-
-    // Tools
-    { id: 31, name: "Git", IconJSX: <StackIcon name="git" className="w-4 h-4" /> },
-    { id: 32, name: "GitHub", IconJSX: <StackIcon name="github" className="w-4 h-4" variant={isDark ? "dark" : "light"} /> },
-    { id: 33, name: "Notion", IconJSX: <StackIcon name="notion" className="w-4 h-4" /> },
-    { id: 34, name: "Cursor", IconJSX: <StackIcon name="cursor" className="w-4 h-4" /> },
-    { id: 35, name: "Antigravity", IconJSX: <StackIcon name="antigravity" className="w-4 h-4" /> }
-  ];
 
   return (
     <>
@@ -121,16 +100,24 @@ export default function Techstack() {
         </h2>
       </SubSection>
       <SubSection>
-        <div className="flex flex-wrap gap-2 py-3 select-none">
-          {TechStacks.map((tech) => (
-            <div
-              key={tech.id}
-              className="inline-flex items-center gap-1.5 px-2 py-1.5 rounded-xs border border-zinc-200 shadow-xs dark:border-zinc-600 dark:bg-card/30 text-foreground text-xs tracking-wide hover:bg-accent/60 hover:text-accent-foreground transition-all duration-200 cursor-pointer"
-            >
-              {tech.IconJSX}
-              {tech.name}
+        <div className="space-y-3 py-3">
+          {/* Languages Row */}
+          {groupedTechStack.languages.length > 0 && (
+            <div className="flex flex-wrap gap-2 select-none">
+              {groupedTechStack.languages.map((tech) => (
+                <TechStackIcon key={tech.id} tech={tech} />
+              ))}
             </div>
-          ))}
+          )}
+
+          {/* Technologies Row */}
+          {groupedTechStack.technologies.length > 0 && (
+            <div className="flex flex-wrap gap-2 select-none">
+              {groupedTechStack.technologies.map((tech) => (
+                <TechStackIcon key={tech.id} tech={tech} />
+              ))}
+            </div>
+          )}
         </div>
       </SubSection>
     </>

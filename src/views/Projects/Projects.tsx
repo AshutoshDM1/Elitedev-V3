@@ -1,23 +1,12 @@
 "use client";
-import { useGetProjects } from "../../hooks/getproject";
+import { projects } from "@/data/project";
 import LineY from "@/Shared/Line/LineY";
 import SubSection from "@/Shared/Section/SubSection";
-import { Loader } from "lucide-react";
-import Loading from "@/Shared/Loading/Loading";
-import ServerError from "@/Shared/Error/Error";
-import { CreateProjectDialog } from "./components/CreateProjectDialog";
-import ProjectCard, { UnifiedProject } from "@/Shared/ProjectCard/ProjectCard";
+import ProjectCard from "@/Shared/ProjectCard/ProjectCard";
+import { Projects as ProjectsType } from "@/types/project.types";
 
 export default function Projects() {
-  const {
-    data: projects = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetProjects();
-
-  const chunkedProjects: UnifiedProject[][] = [];
+  const chunkedProjects: ProjectsType[][] = [];
   for (let i = 0; i < projects.length; i += 2) {
     chunkedProjects.push(projects.slice(i, i + 2));
   }
@@ -36,29 +25,10 @@ export default function Projects() {
                   View all my work
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <CreateProjectDialog />
-              </div>
             </div>
           </SubSection>
 
-          {isLoading ? (
-            <SubSection>
-              <Loading message="Loading projects..." />
-            </SubSection>
-          ) : isError ? (
-            <SubSection>
-              <ServerError
-                title="Failed to load Projects"
-                message={
-                  error instanceof Error
-                    ? error.message
-                    : "Failed to load database projects"
-                }
-                onRetry={() => refetch()}
-              />
-            </SubSection>
-          ) : projects.length === 0 ? (
+          {projects.length === 0 ? (
             <SubSection>
               <div className="flex flex-col items-center justify-center border border-dashed border-zinc-400 dark:border-zinc-700 py-16 text-center">
                 <span className="font-mono text-xs text-muted-foreground uppercase">
@@ -80,7 +50,7 @@ export default function Projects() {
 }
 
 interface GridRowProps {
-  projects: UnifiedProject[];
+  projects: ProjectsType[];
 }
 
 const ProjectGrid = ({ projects }: GridRowProps) => {

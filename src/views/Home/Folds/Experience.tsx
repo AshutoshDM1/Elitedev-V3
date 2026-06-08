@@ -38,6 +38,7 @@ export default function Experience() {
               key={experience.id}
               data={experience}
               isLast={index === Experiences.length - 1}
+              defaultOpen={index === 0}
             />
           ))}
         </div>
@@ -49,11 +50,13 @@ export default function Experience() {
 const ExperienceCards = ({
   data,
   isLast,
+  defaultOpen = false,
 }: {
   data: Experience;
   isLast: boolean;
+  defaultOpen?: boolean;
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const displayLocation = [data.companyLocation, data.userLocation]
     .filter(Boolean)
     .join(" - ");
@@ -84,16 +87,16 @@ const ExperienceCards = ({
           {/* Company & Position Info */}
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-base font-semibold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-sm font-semibold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
                 {data.company}
               </h3>
               {data.jobType && (
-                <span className="text-[13px] font-medium text-muted-foreground/90 bg-muted/30 px-2 py-0.5 rounded-md border border-border/60">
+                <span className="text-[12px] font-medium text-muted-foreground/90 bg-muted/30 px-2 py-0.5 rounded-md border border-border/60">
                   {data.jobType}
                 </span>
               )}
             </div>
-            <p className="text-sm text-muted-foreground font-light mt-0.5">
+            <p className="text-xs text-muted-foreground font-light mt-0.5">
               {data.position}
             </p>
           </div>
@@ -102,7 +105,7 @@ const ExperienceCards = ({
           <div className="flex items-start gap-3 select-none">
             <div className="text-right hidden sm:block">
               <div className="flex items-center justify-end gap-2">
-                <p className="text-sm font-medium text-foreground leading-none">
+                <p className="text-xs font-medium text-foreground leading-none">
                   {data.startDate} - {data.endDate || "Present"}
                 </p>
                 <div className="p-0.5 rounded-sm hover:bg-muted/50 transition-colors duration-200">
@@ -114,7 +117,7 @@ const ExperienceCards = ({
                 </div>
               </div>
               {displayLocation && (
-                <p className="text-sm text-muted-foreground/80 font-light mt-1.5 pr-6">
+                <p className="text-xs text-muted-foreground/80 font-light mt-1.5 pr-6">
                   {displayLocation}
                 </p>
               )}
@@ -141,7 +144,7 @@ const ExperienceCards = ({
           <div className="overflow-hidden">
             {/* Bullet points description */}
             {data.description && data.description.length > 0 && (
-              <ul className="space-y-1.5 text-sm text-foreground/80 pl-1">
+              <ul className="space-y-1.5 text-xs text-foreground/80 pl-1">
                 {data.description.map((bullet, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <span className="w-1 h-1 bg-foreground rounded-full  mt-2 shrink-0" />

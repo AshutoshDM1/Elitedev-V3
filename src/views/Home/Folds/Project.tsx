@@ -6,7 +6,8 @@ import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/project";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import ProjectCard, { UnifiedProject } from "@/Shared/ProjectCard/ProjectCard";
+import ProjectCard from "@/Shared/ProjectCard/ProjectCard";
+import { Projects } from "@/types/project.types";
 
 export default function Project() {
   const [projectShows, setProjectShow] = useState<boolean>(false);
@@ -14,7 +15,7 @@ export default function Project() {
   const displayedProjects = projectShows ? projects : projects.slice(0, 4);
 
   // Chunk projects into pairs of 2 for grid rows
-  const chunkedProjects: UnifiedProject[][] = [];
+  const chunkedProjects: Projects[][] = [];
   for (let i = 0; i < displayedProjects.length; i += 2) {
     chunkedProjects.push(displayedProjects.slice(i, i + 2));
   }
@@ -57,7 +58,7 @@ export default function Project() {
 }
 
 interface GridRowProps {
-  projects: UnifiedProject[];
+  projects: Projects[];
 }
 
 const ProjectGrid = ({ projects }: GridRowProps) => {
