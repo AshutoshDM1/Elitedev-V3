@@ -42,28 +42,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   // 3. Resolve Background Image
   const bgImage = project.backgroundImage || bg.image5;
 
-  // 4. Resolve Tags / Skills from apps config and top-level techstack
-  const getTags = () => {
-    const tagsSet = new Set<string>();
-    if (Array.isArray(project.techstack)) {
-      project.techstack.forEach((tech: string) => tagsSet.add(tech));
-    }
-    const addTechStack = (app: any) => {
-      if (app && typeof app === "object" && Array.isArray(app.techStack)) {
-        app.techStack.forEach((tech: string) => tagsSet.add(tech));
-      }
-    };
-    if (project.apps) {
-      addTechStack(project.apps.frontend);
-      addTechStack(project.apps.backend);
-      addTechStack(project.apps.cliTool);
-      addTechStack(project.apps.microService);
-      addTechStack(project.apps.mpcServer);
-      addTechStack(project.apps.sdk);
-    }
-    return Array.from(tagsSet);
-  };
-  const tagList = getTags();
+  // 4. Resolve Tags / Skills from top-level techstack
+  const tagList = project.techstack || [];
 
   // 5. Resolve Top Label
   const topLabel = project.status || `#${project.id}`;
@@ -208,19 +188,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Tech Stack Badges */}
       {tagList.length > 0 && (
         <div className="flex flex-wrap gap-1 px-1 mt-2.5">
-          {tagList.slice(0, 4).map((tag) => (
+          {tagList.map((tag) => (
             <div key={tag}>
               <Skills name={tag} />
             </div>
           ))}
-          {tagList.length > 4 && (
-            <Badge
-              variant="outline"
-              className="font-mono text-[8px] rounded-none py-0 px-1.5 bg-muted/10 border-foreground/10 text-muted-foreground/50 self-center"
-            >
-              +{tagList.length - 4} MORE
-            </Badge>
-          )}
         </div>
       )}
 
