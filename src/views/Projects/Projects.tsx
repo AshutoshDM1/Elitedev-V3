@@ -17,7 +17,7 @@ export default function Projects() {
       <div className="py-5">
         <LineY className="border-t border-b-0">
           <SubSection>
-            <Header title="Projects" />
+            <Header title="Projects" href="/" />
           </SubSection>
           {chunkedProjects.map((chunk, index) => (
             <SubSection key={index}>

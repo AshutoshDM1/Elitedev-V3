@@ -99,10 +99,10 @@ export type CLITool = {
   projectStatus: ProjectStatus;
 };
 
-export interface Architecture {
-  monolithic: boolean;
-  microservice: boolean;
-  serverless: boolean;
+export enum Architecture {
+  Monolithic = "Monolithic",
+  Microservice = "Microservice",
+  Serverless = "Serverless",
 }
 
 export enum MonoRepo {

@@ -40,14 +40,11 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
         <div className="space-y-4">
           {/* 1. Frontend App */}
           {apps.frontend && typeof apps.frontend === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
-                    {apps.frontend.name}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground font-mono">
-                    (Frontend Client)
+                    Frontend
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -101,32 +98,21 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.frontend.isCICD && (
-                  <BooleanCheck value={true} label="CI/CD" />
-                )}
-                {apps.frontend.isCustomDomain && (
-                  <BooleanCheck value={true} label="Custom Domain" />
-                )}
-                {apps.frontend.monitoringTool && (
-                  <BooleanCheck value={true} label="Monitoring" />
-                )}
-                {apps.frontend.isContianerized && (
-                  <BooleanCheck value={true} label="Containerized" />
-                )}
+                <BooleanCheck value={apps.frontend.isCICD} label="CI/CD" />
+                <BooleanCheck value={apps.frontend.isCustomDomain} label="Custom Domain" />
+                <BooleanCheck value={apps.frontend.monitoringTool} label="Monitoring" />
+                <BooleanCheck value={apps.frontend.isContianerized} label="Containerized" />
               </div>
             </div>
           )}
 
           {/* 2. Backend App */}
           {apps.backend && typeof apps.backend === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
-                    {apps.backend.name}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground font-mono">
-                    (Backend Server)
+                    Backend
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -182,46 +168,24 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.backend.authentication && (
-                  <BooleanCheck value={true} label="Authentication" />
-                )}
-                {apps.backend.caching && (
-                  <BooleanCheck value={true} label="Caching" />
-                )}
-                {apps.backend.objectStorage && (
-                  <BooleanCheck value={true} label="Object Storage" />
-                )}
-                {apps.backend.isContianerized && (
-                  <BooleanCheck value={true} label="Dockerized" />
-                )}
-                {apps.backend.isCICD && (
-                  <BooleanCheck value={true} label="CI/CD" />
-                )}
-                {apps.backend.reverseProxy && (
-                  <BooleanCheck value={true} label="Reverse Proxy" />
-                )}
-                {apps.backend.aIGateway && (
-                  <BooleanCheck value={true} label="AI Gateway" />
-                )}
-                {apps.backend.dbBackup && (
-                  <BooleanCheck value={true} label="DB Backup" />
-                )}
-                {apps.backend.messageBroker && (
-                  <BooleanCheck value={true} label="Message Broker" />
-                )}
-                {apps.backend.monitoringTool && (
-                  <BooleanCheck value={true} label="Monitoring" />
-                )}
-                {apps.backend.isTested && (
-                  <BooleanCheck value={true} label="Tested" />
-                )}
+                <BooleanCheck value={apps.backend.authentication} label="Authentication" />
+                <BooleanCheck value={apps.backend.caching} label="Caching" />
+                <BooleanCheck value={apps.backend.objectStorage} label="Object Storage" />
+                <BooleanCheck value={apps.backend.isContianerized} label="Dockerized" />
+                <BooleanCheck value={apps.backend.isCICD} label="CI/CD" />
+                <BooleanCheck value={apps.backend.reverseProxy} label="Reverse Proxy" />
+                <BooleanCheck value={apps.backend.aIGateway} label="AI Gateway" />
+                <BooleanCheck value={apps.backend.dbBackup} label="DB Backup" />
+                <BooleanCheck value={apps.backend.messageBroker} label="Message Broker" />
+                <BooleanCheck value={apps.backend.monitoringTool} label="Monitoring" />
+                <BooleanCheck value={apps.backend.isTested} label="Tested" />
               </div>
             </div>
           )}
 
           {/* 3. CLI Tool */}
           {apps.cliTool && typeof apps.cliTool === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
@@ -291,16 +255,14 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.cliTool.isCICD && (
-                  <BooleanCheck value={true} label="CI/CD" />
-                )}
+                <BooleanCheck value={apps.cliTool.isCICD} label="CI/CD" />
               </div>
             </div>
           )}
 
           {/* 4. MicroService */}
           {apps.microService && typeof apps.microService === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
@@ -361,16 +323,14 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.microService.isContianerized && (
-                  <BooleanCheck value={true} label="Dockerized" />
-                )}
+                <BooleanCheck value={apps.microService.isContianerized} label="Dockerized" />
               </div>
             </div>
           )}
 
           {/* 5. MPC Server */}
           {apps.mpcServer && typeof apps.mpcServer === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
@@ -447,16 +407,14 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.mpcServer.isCICD && (
-                  <BooleanCheck value={true} label="CI/CD" />
-                )}
+                <BooleanCheck value={apps.mpcServer.isCICD} label="CI/CD" />
               </div>
             </div>
           )}
 
           {/* 6. SDK */}
           {apps.sdk && typeof apps.sdk === "object" && (
-            <div className="border border-zinc-400 dark:border-zinc-700 p-4 bg-muted/5 space-y-3">
+            <div className=" space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-bold text-foreground">
@@ -506,10 +464,9 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
               {(() => {
                 const combinedTech = Array.from(
                   new Set(
-                    [
-                      apps.sdk.language,
-                      ...(apps.sdk.techStack || []),
-                    ].filter(Boolean) as string[]
+                    [apps.sdk.language, ...(apps.sdk.techStack || [])].filter(
+                      Boolean
+                    ) as string[]
                   )
                 );
 
@@ -526,7 +483,7 @@ export const ProjectApps = ({ apps }: ProjectAppsProps) => {
 
               {/* Booleans checkmarks row */}
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {apps.sdk.isCICD && <BooleanCheck value={true} label="CI/CD" />}
+                <BooleanCheck value={apps.sdk.isCICD} label="CI/CD" />
               </div>
             </div>
           )}

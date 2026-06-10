@@ -22,7 +22,7 @@ const Banner = () => {
             <Image
               width={1200}
               height={500}
-              className="h-62 object-cover object-bottom"
+              className="h-70 object-cover object-bottom"
               src={banner.cover3}
               alt="Hero"
               style={maskStyle}

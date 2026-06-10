@@ -34,7 +34,7 @@ export default function SingleProject() {
       <LineY className="border-t border-b-0">
         {/* Navigation & Header */}
         <SubSection>
-          <Header title="Projects" href="/project" />
+          <Header title="Projects" href="/projects" />
         </SubSection>
 
         {/* Project Image Showcase */}
@@ -54,6 +54,10 @@ export default function SingleProject() {
           shortDescription={project.shortDescription}
         />
 
+
+        {/* Application Deployment & Service Stacks */}
+        <ProjectApps apps={project.apps} />
+        
         {/* Core Specs Grid */}
         <ProjectSpecs
           architecture={project.architecture}
@@ -64,9 +68,6 @@ export default function SingleProject() {
           isLLD={project.isLLD}
           isAgentSkills={project.isAgentSkills}
         />
-
-        {/* Application Deployment & Service Stacks */}
-        <ProjectApps apps={project.apps} />
       </LineY>
     </div>
   );

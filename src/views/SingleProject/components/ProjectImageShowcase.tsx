@@ -12,7 +12,7 @@ export const ProjectImageShowcase = ({ projectImage, projectName }: ProjectImage
 
   return (
     <SubSection>
-      <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden border border-dashed border-zinc-400 dark:border-zinc-700 bg-muted/10 p-1 mb-6">
+      <div className="relative w-full aspect-video  shadow-sm">
         <div className="relative w-full h-full overflow-hidden bg-zinc-950/20">
           <Image
             src={projectImage}

@@ -8,12 +8,12 @@ const Profile = () => {
     <SubSection>
       <div className="flex justify-between">
         <div className="flex gap-3">
-          <div className="size-24 border rounded-sm p-1 ">
+          <div className="size-24 border shadow-sm  rounded-sm p-1 overflow-hidden">
             <Image
               src="/avatar/avatar.png"
               height={200}
               width={200}
-              className="size-full object-cover rounded-sm border shadow-sm"
+              className="size-full object-cover rounded-sm border scale-150"
               alt="profile Image"
             />
           </div>
