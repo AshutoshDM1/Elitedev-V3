@@ -9,7 +9,7 @@ interface Props {
 
 const Section: React.FC<Props> = ({ id, className, children }) => {
     return (
-        <section id={id} className={cn("max-w-3xl mx-auto px-4 md:px-6 ", className)} >
+        <section id={id} className={cn("max-w-4xl mx-auto px-4 md:px-6 ", className)} >
             {children}
         </section>
     );

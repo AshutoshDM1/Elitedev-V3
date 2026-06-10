@@ -11,6 +11,9 @@ import image2 from "./background/image2.webp";
 import image3 from "./background/image3.webp";
 import image4 from "./background/image4.webp";
 import image5 from "./background/image5.png";
+import image6 from "./background/image6.png";
+import image7 from "./background/image7.png";
+import image8 from "./background/image8.jpg";
 
 export const bg = {
   image1,
@@ -18,4 +21,7 @@ export const bg = {
   image3,
   image4,
   image5,
+  image6,
+  image7,
+  image8,
 };

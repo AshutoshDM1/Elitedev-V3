@@ -18,11 +18,11 @@ const Profile = () => {
             />
           </div>
           <div className="flex flex-col justify-end pb-2">
-            <h2 className="font-medium text-lg leading-5 flex items-center gap-1.5">
+            <h2 className="font-medium text-xl leading-5 flex items-center gap-1.5">
               Ashutosh Tiwari{" "}
-              <BadgeCheck className="size-[18px] fill-blue-500  text-white dark:text-black shrink-0" />
+              <BadgeCheck className="size-[20px] fill-blue-500  text-white dark:text-black shrink-0" />
             </h2>
-            <p className="text-xs leading-5 ">Software Engineer</p>
+            <p className="text-sm leading-5 ">Software Engineer</p>
           </div>
         </div>
         <div className="flex items-start">

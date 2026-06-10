@@ -13,6 +13,7 @@ export interface Projects {
   projectImage?: string;
   backgroundImage?: StaticImageData;
   pinned: boolean;
+  techstack: string[];
   status: ProjectStatus;
   apps: {
     frontend: Frontend | boolean;

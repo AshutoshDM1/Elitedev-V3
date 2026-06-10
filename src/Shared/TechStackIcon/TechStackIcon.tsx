@@ -4,6 +4,11 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 import { TechStack, TechStackType } from "@/data/techStack";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Alias mapping to translate experience skills names to database names
 const aliasMap: Record<string, string> = {
@@ -110,10 +115,10 @@ export default function TechStackIcon({
 
   const displayName = name || tech?.name || "";
 
-  return (
+  const iconContent = (
     <div
       className={cn(
-        "inline-flex items-center gap-1.5 px-2 py-1.5 rounded-xs border border-zinc-200 shadow-xs dark:border-zinc-600 dark:bg-card/30 text-foreground text-[11px] tracking-wide hover:bg-accent/60 hover:text-accent-foreground transition-all duration-200 cursor-pointer select-none",
+        "inline-flex items-center gap-1.5 px-2 py-1.5 rounded-xs border border-zinc-200 shadow-xs dark:border-zinc-600 dark:bg-card/30 text-foreground text-xs tracking-wide hover:bg-accent/60 hover:text-accent-foreground transition-all duration-200 cursor-pointer select-none",
         className
       )}
     >
@@ -130,5 +135,20 @@ export default function TechStackIcon({
       )}
       <span>{displayName}</span>
     </div>
+  );
+
+  if (!tech || !tech.techCategoryName) {
+    return iconContent;
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        {iconContent}
+      </TooltipTrigger>
+      <TooltipContent sideOffset={6} className="font-sans">
+        <p>{tech.name}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }

@@ -35,7 +35,7 @@ export function GitHubContributions({
     <ContributionGraph
       className={cn("mx-auto py-2", className)}
       data={data}
-      blockSize={11}
+      blockSize={12}
       blockMargin={3}
     >
       <ContributionGraphCalendar

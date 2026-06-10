@@ -4,6 +4,7 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FontChanger, { FontInitializer } from "@/Shared/FontChanger/FontChanger";
 import { ThemeProvider } from "./theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient({
@@ -29,7 +30,9 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         enableSystem
         disableTransitionOnChange
       >
-        {children}
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

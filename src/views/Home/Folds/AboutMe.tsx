@@ -7,7 +7,7 @@ const AboutMe = () => {
     <SubSection>
       <div className="p-2 space-y-5">
         <div className="space-y-4">
-          <p className="text-[14px] font-normal text-accent-foreground/80">
+          <p className="text-base font-normal text-accent-foreground/80">
             Hey, I'm Ashutosh, a full stack developer who loves building clean,
             modern websites and apps where design, functionality, and even the
             smallest details matter, with a focus on making products that are both
@@ -16,10 +16,10 @@ const AboutMe = () => {
             you learn with AI.
           </p>
           <div className="flex gap-2">
-            <Button className="rounded-sm border ring-1 ring-stone-500  bg-clip-border focus-visible:ring-ring/50 ">
+            <Button className="rounded-sm border ring-1 ring-stone-500 text-xs bg-clip-border focus-visible:ring-ring/50 ">
               <Calendar1 className="size-4 mr-0.5 " /> Book a intro Call
             </Button>
-            <Button className="rounded-sm border ring-1 ring-stone-500  bg-clip-border focus-visible:ring-ring/50 ">
+            <Button className="rounded-sm border ring-1 ring-stone-500 text-xs bg-clip-border focus-visible:ring-ring/50 ">
               <MailPlus className="size-4 mr-0.5 " />
               Send a Email
             </Button>
@@ -90,7 +90,7 @@ export function Socials() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 text-[11px]  transition-colors border border-zinc-200/50 dark:border-zinc-800/50 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 text-sm  transition-colors border border-zinc-200/50 dark:border-zinc-800/50 cursor-pointer"
             >
               <Icon className="size-3.5" />
               {social.name}

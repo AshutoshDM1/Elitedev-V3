@@ -29,7 +29,7 @@ export const Xcontext: Projects = {
   shortDescription:
     "Xcontext - The Fastest Way to Start a Monorepo PNPM Workspaces",
   description: `Xcontext - The Fastest Way to Start a Monorepo PNPM Workspaces`,
-  backgroundImage: bg.image5,
+  backgroundImage: bg.image7,
   pinned: false,
   status: ProjectStatus.Completed,
   isMonorepo: MonoRepo.PnpmWorkspaces,
@@ -37,6 +37,17 @@ export const Xcontext: Projects = {
   isReadme: true,
   isLLD: false,
   isAgentSkills: false,
+  techstack: [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Shadcn UI",
+    "Express",
+    "tPRC",
+    "prisma",
+    "cloudflare",
+    "DigitalOcean",
+  ],
   isOpenSource: true,
   architecture: false,
   apps: {

@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { Outfit, Geist, DM_Sans } from "next/font/google";
+import { Outfit, Geist, DM_Sans, Doto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Provider from "@/components/Provider";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+});
+
+const doto = Doto({
+  variable: "--font-doto",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -30,14 +36,16 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", outfit.variable, dm_sans.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        outfit.variable,
+        dm_sans.variable,
+        doto.variable,
+      )}
     >
-      <body
-        suppressHydrationWarning
-        className="min-h-full flex flex-col ">
-        <Provider>
-          {children}
-        </Provider>
+      <body suppressHydrationWarning className="min-h-full flex flex-col ">
+        <Provider>{children}</Provider>
         <Analytics />
       </body>
     </html>

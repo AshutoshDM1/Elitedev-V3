@@ -135,7 +135,7 @@ export const TechStack: TechStackType[] = [
   },
   {
     id: 15,
-    name: "DigitalIOcean",
+    name: "DigitalOcean",
     order: 1,
     techCategoryId: 6,
     techCategoryName: "Cloud Computing",
