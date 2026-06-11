@@ -1,7 +1,7 @@
 import { StaticImageData } from "next/image";
 
 export interface Projects {
-  id: number;
+  slug: string;
   name: string;
   startDate: string;
   endDate: string;
@@ -11,6 +11,7 @@ export interface Projects {
   shortDescription: string;
   description: string;
   projectImage?: string;
+  projectVideo?: string;
   backgroundImage?: StaticImageData;
   pinned: boolean;
   techstack: string[];
@@ -112,7 +113,7 @@ export enum MonoRepo {
 }
 
 export enum ProjectStatus {
-  Live = "Live",
+  OnGoing = "OnGoing",
   Building = "Building",
   Completed = "Completed",
 }
@@ -154,7 +155,7 @@ export enum Containerized {
 export enum DatabaseHosting {
   NeonDB = "Neon DB",
   Aiven = "Avien",
-  SelfHosting = "Self Hosting",
+  SelfHostingDB = "Self Hosted DB",
 }
 
 export enum Authentication {

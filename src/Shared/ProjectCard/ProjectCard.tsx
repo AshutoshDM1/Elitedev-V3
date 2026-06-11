@@ -10,6 +10,8 @@ import { bg } from "@/assets/import";
 import { GithubIcon } from "@/Shared/Icons/Icons";
 import { Badge } from "@/components/ui/badge";
 import Skills from "@/Shared/Skills/Skills";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import ProjectVideoPopUp from "./ProjectVideoPopUp";
 
 import { Projects } from "@/types/project.types";
 
@@ -19,6 +21,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [cardHover, setCardHover] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onCardHover = () => {
     setCardHover(true);
@@ -46,7 +49,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const tagList = project.techstack || [];
 
   // 5. Resolve Top Label
-  const topLabel = project.status || `#${project.id}`;
+  const topLabel = project.status || project.slug;
 
   // 6. Resolve Status
   const statusText = project.status;
@@ -56,6 +59,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     if (!status)
       return { dot: "bg-zinc-400", text: "text-muted-foreground/80" };
     switch (status.toLowerCase()) {
+      case "ongoing":
       case "live":
         return {
           dot: "bg-emerald-500 animate-pulse",
@@ -74,11 +78,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   };
   const statusColors = getStatusColor(statusText);
 
-  // 7. Resolve Description
-  const description = project.description || project.shortDescription || "";
-
   // 8. Resolve Link Details
-  const detailsHref = `/projects/${project.id}`;
+  const detailsHref = `/projects/${project.slug}`;
   const detailsLabel = "View Project";
 
   // 9. Links for Icons
@@ -101,13 +102,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <div
       onMouseEnter={onCardHover}
       onMouseLeave={onCardLeave}
+      onClick={() => setIsOpen(true)}
       className="w-full flex flex-col group cursor-pointer"
     >
       {/* Image / Preview Container */}
       <div className="relative w-full aspect-video rounded-none border border-border/80 bg-muted/15 p-1 transition-colors duration-300 group-hover:border-border">
         <div className="h-full w-full border rounded-none bg-muted overflow-hidden relative flex justify-center items-end ">
           {/* Top Label */}
-          <span className="absolute top-1.5 group-hover:left-1/2 group-hover:-translate-x-1/2 transition-all duration-300 left-4 text-xs font-mono text-foreground select-none z-20">
+          <span className="absolute top-1.5 group-hover:left-1/2 group-hover:-translate-x-1/2 transition-all duration-300 left-4 text-xs font-medium uppercase text-background select-none z-20">
             {topLabel}
           </span>
 
@@ -170,7 +172,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {statusText && (
           <div
             className={cn(
-              "flex items-center gap-1.5 text-xs select-none font-medium",
+              "flex items-center gap-1.5 text-xs select-none font-medium uppercase",
               statusColors.text,
             )}
           >
@@ -181,8 +183,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-foreground mt-1.5 px-1 line-clamp-2 leading-relaxed">
-        {description}
+      <p className="text-sm text-foreground/60 mt-1.5 px-1 line-clamp-2 leading-relaxed">
+        {project.shortDescription}
       </p>
 
       {/* Tech Stack Badges */}
@@ -200,7 +202,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="px-1 pt-3 flex items-center justify-between">
         <Link
           href={detailsHref}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground/80 group-hover:text-foreground transition-colors"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-1 text-xs font-semibold hover:text-muted-foreground group-hover:text-foreground transition-colors"
         >
           <span>{detailsLabel}</span>
           <ArrowUpRight className="size-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -209,55 +212,87 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Info Icons */}
         <div className="flex items-center gap-1.5">
           {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="View Live Site"
-              onClick={(e) => e.stopPropagation()}
-              className="p-1 hover:bg-muted text-muted-foreground hover:text-foreground border border-zinc-400/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all duration-150 rounded-none"
-            >
-              <ExternalLink className="size-3.5" />
-            </a>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1 hover:text-muted-foreground transition-all duration-150 rounded-none"
+                >
+                  <ExternalLink className="size-3.5" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>View Live Site</span>
+              </TooltipContent>
+            </Tooltip>
           )}
           {monorepoUrl && (
-            <a
-              href={monorepoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Monorepo Repository"
-              onClick={(e) => e.stopPropagation()}
-              className="p-1 hover:bg-muted text-muted-foreground hover:text-foreground border border-zinc-400/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all duration-150 rounded-none flex items-center gap-1 font-mono text-[8px] uppercase font-bold"
-            >
-              <GithubIcon className="size-3.5" />
-              <span className="text-[7px] tracking-tight">Mono</span>
-            </a>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={monorepoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1 hover:text-muted-foreground transition-all duration-150 rounded-none flex items-center gap-1 font-mono text-[8px] uppercase font-bold"
+                >
+                  <GithubIcon className="size-3.5" />
+                  <span className="text-[10px] tracking-wide ">Mono</span>
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Monorepo Repository</span>
+              </TooltipContent>
+            </Tooltip>
           )}
           {clientRepo && (
-            <a
-              href={clientRepo}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Client Repository"
-              onClick={(e) => e.stopPropagation()}
-              className="p-1 hover:bg-muted text-muted-foreground hover:text-foreground border border-zinc-400/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all duration-150 rounded-none"
-            >
-              <GithubIcon className="size-3.5" />
-            </a>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={clientRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1 hover:text-muted-foreground transition-all duration-150 rounded-none"
+                >
+                  <GithubIcon className="size-3.5" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Client Repository</span>
+              </TooltipContent>
+            </Tooltip>
           )}
-          {serverRepo && (
-            <a
-              href={serverRepo}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Server Repository"
-              onClick={(e) => e.stopPropagation()}
-              className="p-1 hover:bg-muted text-muted-foreground hover:text-foreground border border-zinc-400/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all duration-150 rounded-none"
-            >
-              <Server className="size-3.5" />
-            </a>
+          {serverRepo && !isMonorepo && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={serverRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1 hover:text-muted-foreground transition-all duration-150 rounded-none"
+                >
+                  <Server className="size-3.5" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Server Repository</span>
+              </TooltipContent>
+            </Tooltip>
           )}
         </div>
+      </div>
+
+      <div onClick={(e) => e.stopPropagation()}>
+        <ProjectVideoPopUp
+          project={project}
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+        />
       </div>
     </div>
   );

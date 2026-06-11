@@ -7,11 +7,12 @@ import Profile from "./Folds/Profile";
 import Project from "./Folds/Project";
 import Quote from "./Folds/Quote";
 import Techstack from "./Folds/TechStack";
+import Footer from "./Folds/Footer";
 
 export default function Home() {
   return (
     <>
-      <div className="py-2 pb-60 ">
+      <div className="py-2 pb-10">
         <Banner />
         <Profile />
         <AboutMe />
@@ -21,6 +22,7 @@ export default function Home() {
         <Project />
         <Blogs />
         <Quote />
+        <Footer />
       </div>
     </>
   );

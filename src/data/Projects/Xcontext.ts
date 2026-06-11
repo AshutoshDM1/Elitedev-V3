@@ -18,7 +18,7 @@ import {
 } from "@/types/project.types";
 
 export const Xcontext: Projects = {
-  id: 10,
+  slug: "xcontext",
   name: "Xcontext",
   startDate: "2025",
   endDate: "Present",
@@ -27,11 +27,18 @@ export const Xcontext: Projects = {
   projectIcon: "https://xcontext.elitedev.space/favicon.ico",
   projectImage: "/project/xcontext.png",
   shortDescription:
-    "Xcontext - The Fastest Way to Start a Monorepo PNPM Workspaces",
-  description: `Xcontext - The Fastest Way to Start a Monorepo PNPM Workspaces`,
+    "XContext is a platform for taking AI interview of given Codebase and Contests.",
+  description: `XContext is a platform for taking AI interview of given Codebase.
+
+- Advanced manga search, filtering, and pagination
+- Personalized reading progress and collections
+- Full admin dashboard for manga/chapter management
+- AWS EC2 + Docker deployment with CI/CD pipelines
+- Zustand-powered modular frontend architecture
+- Smooth responsive animations and optimized reading experience`,
   backgroundImage: bg.image7,
   pinned: false,
-  status: ProjectStatus.Completed,
+  status: ProjectStatus.Building,
   isMonorepo: MonoRepo.PnpmWorkspaces,
   isHusky: true,
   isReadme: true,
@@ -43,10 +50,9 @@ export const Xcontext: Projects = {
     "Tailwind CSS",
     "Shadcn UI",
     "Express",
-    "tPRC",
-    "prisma",
-    "cloudflare",
     "DigitalOcean",
+    "Drizzle",
+    "Vercel AI",
   ],
   isOpenSource: true,
   architecture: false,

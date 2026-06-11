@@ -16,11 +16,11 @@ import {
   ReverseProxy,
   AIGateway,
   MonitoringTool,
-  Architecture
+  Architecture,
 } from "@/types/project.types";
 
 export const Aset: Projects = {
-  id: 1,
+  slug: "aset",
   name: "Aset",
   startDate: "04.2026",
   endDate: "Present",
@@ -28,9 +28,16 @@ export const Aset: Projects = {
   githubLink: "https://github.com/AshutoshDM1/Aset",
   projectIcon: "https://aset.elitedev.space/favicon/favicon.ico",
   projectImage: "/project/aset.png",
+  projectVideo:"https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/10d2e72f-2bcf-4f1f-9956-1106d7170e94/aeda39f1-8a96-476c-800d-ed97d7b3b0b5-Cap 2026-06-11 at 14.23.07.mp4",
   shortDescription:
     "Modern cloud-native file storage and management platform inspired by Google Drive with end-to-end type safety.",
-  description: `Modern cloud-native file storage and management platform inspired by Google Drive with end-to-end type safety`,
+  description: `## Features
+- **Secure Authentication** — Powered by [Clerk](https://clerk.com/) with protected dashboard routes.
+- **File & Folder Management** — Create, browse, rename, move, and delete files and nested folders.
+- **Cloud Storage** — Files stored in [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) via presigned URLs.
+- **Smart Views** — Dedicated pages for **All Files**, **Recent**, **Starred**, **Shared**, and **Trash**.
+- **Type-Safe API** — End-to-end type safety from database to UI using tRPC + Zod.
+- **Modern UI** — Built with React 19, Tailwind CSS v4, shadcn/ui, and Radix primitives.`,
   backgroundImage: bg.image5,
   pinned: true,
   status: ProjectStatus.Completed,
@@ -39,14 +46,16 @@ export const Aset: Projects = {
   isReadme: true,
   isLLD: true,
   techstack: [
-    "Next.js",
+    "React.js",
     "TypeScript",
+    "GO",
     "Tailwind CSS",
     "Shadcn UI",
-    "Express",
     "tPRC",
+    "Express",
     "prisma",
     "cloudflare",
+    "Redis",
     "DigitalOcean",
   ],
   isAgentSkills: true,
@@ -56,7 +65,13 @@ export const Aset: Projects = {
       name: "Aset",
       link: "https://aset.elitedev.space/",
       github: "https://github.com/AshutoshDM1/Aset",
-      techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI" , "Clerk"],
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Shadcn UI",
+        "Clerk",
+      ],
       isContianerized: false,
       isCICD: CICD.Vercel,
       deploymentPlatform: DeploymentPlatform.Vercel,
@@ -82,7 +97,7 @@ export const Aset: Projects = {
       isCICD: CICD.GithubActions,
       deploymentPlatform: DeploymentPlatform.DigitalOcean,
       dbBackup: false,
-      databaseHosting: DatabaseHosting.SelfHosting,
+      databaseHosting: DatabaseHosting.SelfHostingDB,
       deploymentStatus: DeploymentStatus.Live,
       monitoringTool: MonitoringTool.NewRelic,
       isCustomDomain: true,

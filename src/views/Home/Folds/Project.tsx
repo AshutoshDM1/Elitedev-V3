@@ -66,7 +66,7 @@ const ProjectGrid = ({ projects }: GridRowProps) => {
     <>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 py-2 ">
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.slug} project={project} />
         ))}
       </div>
     </>

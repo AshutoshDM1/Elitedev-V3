@@ -3,8 +3,9 @@ import cover2 from "./banner/cover2.jpg";
 import cover3 from "./banner/cover3.jpg";
 import cover4 from "./banner/cover4.jpg";
 import cover5 from "./banner/cover5.jpg";
+import footer1 from "./banner/footer1.webp";
 
-export const banner = { cover1, cover2, cover3, cover4, cover5 };
+export const banner = { cover1, cover2, cover3, cover4, cover5, footer1 };
 
 import image1 from "./background/image1.webp";
 import image2 from "./background/image2.webp";

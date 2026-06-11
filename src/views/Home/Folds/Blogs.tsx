@@ -19,27 +19,35 @@ export default function Blogs() {
   const blogList: Blog[] = [
     {
       id: 1,
-      title: "My GSOC Journey: The 2-Month Sprint from Doubt to Done",
-      date: "Jun 2025",
-      claps: 392,
-      tags: ["GSOC", "Open Source"],
-      link: "#",
+      title: "Deploying Nextjs15 Project using Docker",
+      date: "Nov 2025",
+      claps: 342,
+      tags: ["AWS", "Docker", "Nginx", "CI/CD"],
+      link: "https://elitedevs.notion.site/Deploying-Nextjs15-Project-EC2-DockerHub-Nginx-Github-Action-2a68f02f77c780e998c1d5224c6202c9",
     },
     {
       id: 2,
-      title: "JWT Authentication APIs with TypeScript, Node.js, and MongoDB.",
-      date: "Feb 2025",
-      claps: 104,
-      tags: ["Authentication", "TypeScript", "MongoDB"],
-      link: "#",
+      title: "Vercel Deploy Hook + Github Action CI/CD",
+      date: "Nov 2025",
+      claps: 215,
+      tags: ["Vercel", "CI/CD", "Github Actions"],
+      link: "https://elitedevs.notion.site/Vercel-Deploy-Hook-Github-Action-CI-CD-2af8f02f77c78068ab6be32cba46ae4f",
     },
     {
       id: 3,
-      title: "Docker with Node.js & Express.js.",
-      date: "Feb 2025",
-      claps: 73,
-      tags: ["Docker", "Node.js", "Express.js"],
-      link: "#",
+      title: "Redis - Rate Limiting and Caching",
+      date: "May 2026",
+      claps: 189,
+      tags: ["Redis", "Caching", "System Design"],
+      link: "https://elitedevs.notion.site/Redis-Rate-Limiting-and-Caching-3718f02f77c7809b90ceec4f9c60c66e",
+    },
+    {
+      id: 4,
+      title: "Custom PostgreSQL DB Hosting and Backup using Docker",
+      date: "Apr 2026",
+      claps: 154,
+      tags: ["PostgreSQL", "Docker", "Database Hosting"],
+      link: "https://elitedevs.notion.site/Custom-PostgreSQL-DB-Hosting-Docker-VM-33a8f02f77c780ccbffdee887619a129",
     },
   ];
 
@@ -68,7 +76,7 @@ export default function Blogs() {
 const BlogCard = ({ data, isLast }: { data: Blog; isLast: boolean }) => {
   return (
     <LineY className={isLast ? "border-none" : "pb-2"}>
-      <Link href={data.link} className="block w-full">
+      <Link href={data.link} target="_blank"  className="block w-full">
         <div className="w-full p-2 hover:bg-card/40 transition-all duration-300 relative overflow-hidden group rounded-md">
           {/* Header row (Title + external arrow) */}
           <div className="flex justify-between items-start gap-4">

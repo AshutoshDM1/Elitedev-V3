@@ -8,20 +8,28 @@ import Header from "@/Shared/Header/Header";
 import { projects } from "@/data/project";
 import { ProjectImageShowcase } from "./components/ProjectImageShowcase";
 import { ProjectHeader } from "./components/ProjectHeader";
-import { ProjectTechStack } from "./components/ProjectTechStack";
 import { ProjectSpecs } from "./components/ProjectSpecs";
 import { ProjectApps } from "./components/ProjectApps";
+import MDFormat from "@/Shared/MDFormat/MDFormat";
 
-export default function SingleProject() {
+interface SingleProjectProps {
+  projectSlug?: string;
+  isAdmin?: boolean;
+}
+
+export default function SingleProject({
+  projectSlug,
+  isAdmin = false,
+}: SingleProjectProps) {
   const params = useParams();
-  const projectIdStr = params ? params["project-id"] : "";
+  const projectIdStr = projectSlug || (params ? params["project-id"] : "");
 
   const project = React.useMemo(() => {
     if (!projectIdStr) return null;
     return projects.find(
       (p) =>
-        p.id.toString() === projectIdStr ||
-        p.name.toLowerCase() === String(projectIdStr).toLowerCase()
+        p.slug.toLowerCase() === String(projectIdStr).toLowerCase() ||
+        p.name.toLowerCase() === String(projectIdStr).toLowerCase(),
     );
   }, [projectIdStr]);
 
@@ -40,13 +48,16 @@ export default function SingleProject() {
         {/* Project Image Showcase */}
         <ProjectImageShowcase
           projectImage={project.projectImage}
+          projectVideo={project.projectVideo}
           projectName={project.name}
         />
 
         {/* Title, Timeline & Description Block */}
         <ProjectHeader
           name={project.name}
-          id={project.id}
+          slug={project.slug}
+          liveLink={project.liveLink}
+          githubLink={project.githubLink}
           status={project.status}
           startDate={project.startDate}
           endDate={project.endDate}
@@ -54,20 +65,28 @@ export default function SingleProject() {
           shortDescription={project.shortDescription}
         />
 
-
         {/* Application Deployment & Service Stacks */}
         <ProjectApps apps={project.apps} />
-        
+        <SubSection>
+          {project.description && (
+            <MDFormat content={project.description} className="mt-4" />
+          )}
+        </SubSection>
+
         {/* Core Specs Grid */}
-        <ProjectSpecs
-          architecture={project.architecture}
-          isMonorepo={project.isMonorepo}
-          isHusky={project.isHusky}
-          isOpenSource={project.isOpenSource}
-          isReadme={project.isReadme}
-          isLLD={project.isLLD}
-          isAgentSkills={project.isAgentSkills}
-        />
+        {isAdmin && (
+          <ProjectSpecs
+            architecture={project.architecture}
+            isMonorepo={project.isMonorepo}
+            isHusky={project.isHusky}
+            isOpenSource={project.isOpenSource}
+            isReadme={project.isReadme}
+            isLLD={project.isLLD}
+            isAgentSkills={project.isAgentSkills}
+            frontend={project.apps.frontend}
+            backend={project.apps.backend}
+          />
+        )}
       </LineY>
     </div>
   );

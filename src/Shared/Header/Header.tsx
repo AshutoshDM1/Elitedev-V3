@@ -1,3 +1,4 @@
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeftDash, ChevronLeft } from "lucide-react";
 import Link from "next/link";
@@ -25,6 +26,9 @@ const Header = ({ title, href }: HeaderProps) => {
         <h1 className="text-xl font-medium text-foreground tracking-tight">
           {title}
         </h1>
+      </div>
+      <div className="flex items-start">
+        <ThemeToggle />
       </div>
     </div>
   );

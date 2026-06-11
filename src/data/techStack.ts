@@ -643,4 +643,16 @@ export const TechStack: TechStackType[] = [
     createdAt: "2026-06-07T11:06:47.880Z",
     updatedAt: "2026-06-07T11:06:47.880Z",
   },
+  {
+    id: 57,
+    name: "Self Hosted DB",
+    techCategoryId: 5,
+    techCategoryName: "Database",
+    logoLight:
+      "https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/4aa91f08-4532-4138-a6f4-2367a5bf9aa0-image-Photoroom.png",
+    logoDark:
+      "https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/4aa91f08-4532-4138-a6f4-2367a5bf9aa0-image-Photoroom.png",
+    createdAt: "2026-06-11T08:08:57.057Z",
+    updatedAt: "2026-06-11T08:08:57.057Z",
+  },
 ];
