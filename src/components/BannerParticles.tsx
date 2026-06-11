@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 const settings = {
   minWind: 0.5,
   maxWind: 3,
-  minSize: 6,
+  minSize: 9,
   maxSize: 18,
   emitterY: 0.2,
   emitterSpread: 0.9,
@@ -14,7 +14,7 @@ const settings = {
   rotationSpeed: 0,
   tumbleStrength: 0.3,
   staticTilt: 0,
-  particleCount: 40,
+  particleCount: 60,
   direction: 1 // 1 = left to right
 };
 

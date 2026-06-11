@@ -1,0 +1,23 @@
+# Ashutosh Tiwari
+
+Full Stack Developer & Software Engineer based in India.
+Portfolio: https://ashutoshtiwari.me
+
+## Profile
+Ashutosh Tiwari specializes in building clean, modern websites and applications where design, functionality, and minor details matter. Focused on creating products that are both highly practical and visually satisfying. Currently developing **XContext**, an AI-driven learning and search tool.
+
+## Key Projects
+- **XContext**: An innovative platform designed to transform learning and context searching using AI.
+- **Portfolio & Resume Studio**: A customized portfolio showcasing experiences, project history, and dynamic resume tools.
+
+## Technical Skills
+- **Frontend**: React, Next.js, TypeScript, TailwindCSS, Framer Motion, HTML5, CSS3, JavaScript.
+- **Backend & Database**: Node.js, Express, PostgreSQL, Neon Database, Drizzle ORM.
+- **DevOps & Tools**: Git, Vercel, Netlify, Bun, npm.
+
+## Online Presence & Contact
+- **Email**: ashutosh0tiwari@gmail.com
+- **GitHub**: https://github.com/AshutoshDM1
+- **LinkedIn**: https://www.linkedin.com/in/ashutosh-tiwari-8931b82b8/
+- **Twitter / X**: https://x.com/AshutoshDM_1
+- **Cal.com**: https://cal.com/ashutosh-tiwari-dm1 (Book a Call)

@@ -2,12 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { banner } from "@/assets/import";
 import SubSection from "@/Shared/Section/SubSection";
+import { BannerParticles } from "@/components/BannerParticles";
 
 export default function Footer() {
   return (
     <SubSection className="w-full relative">
       {/* Background Image Container that determines height */}
       <div className="w-full relative">
+        <BannerParticles />
         <Image
           src={banner.footer1}
           alt="Footer Background"
@@ -40,8 +42,32 @@ export default function Footer() {
           </Link>
           .
         </p>
-        <p className="text-[10px] sm:text-xs md:text-sm text-white font-sans tracking-wide">
-          &copy; 2026 Ashutosh Tiwari &middot; All rights reserved
+        <p className="text-[10px] sm:text-xs md:text-sm text-white/90 font-sans tracking-wide flex items-center justify-center gap-2 flex-wrap">
+          <span>&copy; 2026 Ashutosh Tiwari &middot; All rights reserved</span>
+          <span className="text-white/40 select-none">&middot;</span>
+          <Link
+            href="/robots.txt"
+            target="_blank"
+            className="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current"
+          >
+            robots.txt
+          </Link>
+          <span className="text-white/40 select-none">&middot;</span>
+          <Link
+            href="/sitemap.xml"
+            target="_blank"
+            className="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current"
+          >
+            sitemap.xml
+          </Link>
+          <span className="text-white/40 select-none">&middot;</span>
+          <Link
+            href="/llm.txt"
+            target="_blank"
+            className="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current"
+          >
+            llm.txt
+          </Link>
         </p>
       </div>
     </SubSection>
