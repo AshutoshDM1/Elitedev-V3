@@ -1,4 +1,7 @@
+import BorderGlow from "@/components/BorderGlow";
+import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import SubSection from "@/Shared/Section/SubSection";
 import { Calendar1, CalendarSearch, MailPlus } from "lucide-react";
 import Link from "next/link";
@@ -8,7 +11,7 @@ const AboutMe = () => {
     <SubSection>
       <div className="p-2 space-y-5">
         <div className="space-y-4">
-          <p className="text-base font-normal text-accent-foreground/80">
+          <p className="text-sm md:text-base font-normal text-accent-foreground/80">
             Hey, I'm Ashutosh, a full stack developer who loves building clean,
             modern websites and apps where design, functionality, and even the
             smallest details matter, with a focus on making products that are
@@ -17,13 +20,25 @@ const AboutMe = () => {
             change how you learn with AI.
           </p>
           <div className="flex gap-2">
-            <Link href={"https://cal.com/ashutosh-tiwari-dm1"} target="_blank" >
-              <Button className="rounded-sm border ring-1 ring-stone-500 text-xs bg-clip-border focus-visible:ring-ring/50 ">
+            <Link href={"https://cal.com/ashutosh-tiwari-dm1"} target="_blank">
+              <Button
+                className={cn(
+                  "rounded-sm border-none ring-1 text-xs ",
+                  "bg-linear-to-b from-zinc-600 zinc-700 via-zinc-900 to-black bg-clip-border focus-visible:ring-ring/50 ring-stone-500 ",
+                  "dark:bg-linear-to-b dark:from-zinc-700 dark:zinc-700 dark:via-zinc-900 dark:to-black bg-clip-border focus-visible:ring-ring/50 dark:text-white dark:ring-zinc-800 shadow-none ",
+                )}
+              >
                 <Calendar1 className="size-4 mr-0.5 " /> Book a intro Call
               </Button>
             </Link>
-            <Link href="mailto:ashutosh0tiwari@gmail.com" target="_blank" >
-              <Button className="rounded-sm border ring-1 ring-stone-500 text-xs bg-clip-border focus-visible:ring-ring/50 ">
+            <Link href="mailto:ashutosh0tiwari@gmail.com" target="_blank">
+              <Button
+                className={cn(
+                  "rounded-sm border-none ring-1 text-xs ",
+                  "bg-linear-to-b from-zinc-600 zinc-700 via-zinc-900 to-black bg-clip-border focus-visible:ring-ring/50 ring-stone-500 ",
+                  "dark:bg-linear-to-b dark:from-zinc-700 dark:zinc-700 dark:via-zinc-900 dark:to-black bg-clip-border focus-visible:ring-ring/50 dark:text-white dark:ring-zinc-800 shadow-none relative",
+                )}
+              >
                 <MailPlus className="size-4 mr-0.5 " />
                 Send a Email
               </Button>
