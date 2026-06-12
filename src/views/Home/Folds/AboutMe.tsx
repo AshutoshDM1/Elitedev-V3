@@ -11,19 +11,19 @@ const AboutMe = () => {
     <SubSection>
       <div className="p-2 space-y-5">
         <div className="space-y-4">
-          <p className="text-sm md:text-base font-normal text-accent-foreground/80">
-            Hey, I'm Ashutosh, a full stack developer who loves building clean,
-            modern websites and apps where design, functionality, and even the
-            smallest details matter, with a focus on making products that are
-            both practical and visually satisfying. <br /> I'm currently working
-            on my own thing @XContext, building something that will completely
-            change how you learn with AI.
+          <p className="text-sm text-accent-foreground/80 leading-relaxed">
+            Hey, I'm <span className="font-semibold text-foreground">Ashutosh</span>, a{" "}
+            <span className="font-semibold text-foreground">full stack developer</span> who loves building{" "}
+            <span className="font-semibold text-foreground">clean, modern websites and apps</span> where
+            design, functionality, and even the smallest details matter. My focus is on making products that are
+            both <span className="font-semibold text-foreground">practical</span> and{" "}
+            <span className="font-semibold text-foreground">visually satisfying</span>.
           </p>
           <div className="flex gap-2">
             <Link href={"https://cal.com/ashutosh-tiwari-dm1"} target="_blank">
               <Button
                 className={cn(
-                  "rounded-sm border-none ring-1 text-xs ",
+                  "rounded-sm border-none ring-1 text-[13px] font-light ",
                   "bg-linear-to-b from-zinc-600 zinc-700 via-zinc-900 to-black bg-clip-border focus-visible:ring-ring/50 ring-stone-500 ",
                   "dark:bg-linear-to-b dark:from-zinc-700 dark:zinc-700 dark:via-zinc-900 dark:to-black bg-clip-border focus-visible:ring-ring/50 dark:text-white dark:ring-zinc-800 shadow-none ",
                 )}
@@ -34,7 +34,7 @@ const AboutMe = () => {
             <Link href="mailto:ashutosh0tiwari@gmail.com" target="_blank">
               <Button
                 className={cn(
-                  "rounded-sm border-none ring-1 text-xs ",
+                  "rounded-sm border-none ring-1 text-[13px] font-light ",
                   "bg-linear-to-b from-zinc-600 zinc-700 via-zinc-900 to-black bg-clip-border focus-visible:ring-ring/50 ring-stone-500 ",
                   "dark:bg-linear-to-b dark:from-zinc-700 dark:zinc-700 dark:via-zinc-900 dark:to-black bg-clip-border focus-visible:ring-ring/50 dark:text-white dark:ring-zinc-800 shadow-none relative",
                 )}
@@ -121,7 +121,7 @@ export function Socials() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 text-sm  transition-colors border border-zinc-200/50 dark:border-zinc-800/50 cursor-pointer"
+              className="inline-flex text-xs font-light items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 transition-colors border border-zinc-200/50 dark:border-zinc-800/50 cursor-pointer"
             >
               <Icon className="size-3.5" />
               {social.name}

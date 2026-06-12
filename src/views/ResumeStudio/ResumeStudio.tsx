@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
+import { useIsDark } from "@/hooks/useIsDark";
 import CanvasContent from "./CanvasContent";
 import LeftPanel from "./components/LeftPanel";
 import RightPanel from "./components/RightPanel";
@@ -16,18 +17,8 @@ export default function PortfolioStudio() {
   const [canvasDark, setCanvasDark] = React.useState(false);
   const [bgPreset, setBgPreset] = React.useState("dots");
   const [isStudioMode, setIsStudioMode] = React.useState(false);
-  const [mounted, setMounted] = React.useState(false);
-  const { theme, setTheme } = useTheme();
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isGlobalDark =
-    mounted &&
-    (theme === "dark" ||
-      (theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches));
+  const { setTheme } = useTheme();
+  const { isDark: isGlobalDark, mounted } = useIsDark();
 
   React.useEffect(() => {
     if (mounted) {

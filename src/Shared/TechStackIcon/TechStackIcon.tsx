@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useTheme } from "next-themes";
+import { useIsDark } from "@/hooks/useIsDark";
 import { TechStack, TechStackType } from "@/data/techStack";
 import { cn } from "@/lib/utils";
 import {
@@ -92,19 +92,7 @@ export default function TechStackIcon({
   tech: propTech,
   className,
 }: TechStackIconProps) {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark =
-    mounted &&
-    (theme === "dark" ||
-      (theme === "system" &&
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches));
+  const { isDark } = useIsDark();
 
   // Find tech object by name if not provided
   const tech = React.useMemo(() => {

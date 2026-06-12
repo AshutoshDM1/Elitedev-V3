@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="w-full relative">
         <BannerParticles />
         <Image
-          src={banner.footer1}
+          src={banner.footer4}
           alt="Footer Background"
           priority
           className="w-full h-[300px] object-cover object-center filter brightness-95 dark:brightness-110"
