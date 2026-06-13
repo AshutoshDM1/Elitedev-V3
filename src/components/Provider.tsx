@@ -38,6 +38,12 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
           <TooltipProvider>{children}</TooltipProvider>
         </SmoothScroll>
       </ThemeProvider>
+      <script
+        src="https://page-views-api.ratneshc.com/script"
+        data-site="ashutoshtiwari.me"
+        data-path="/"
+        defer
+      />
     </QueryClientProvider>
   );
 };

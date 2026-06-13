@@ -131,6 +131,17 @@
   html {
     @apply font-dm-sans;
   }
+  
+  /* Custom Text Selection Styling */
+  ::selection {
+    background-color: oklch(32.109% 0.00004 271.152);
+    color: oklch(0.985 0 0);
+  }
+
+  .dark ::selection {
+    background-color: oklch(0.92 0.004 286.32);
+    color: oklch(0.21 0.006 285.885);
+  }
 }
 
 @utility link-underline {
