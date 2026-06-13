@@ -33,7 +33,10 @@ export default function LeftPanel({
   getDimensionLabel,
 }: LeftPanelProps) {
   return (
-    <div className="w-72 shrink-0 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/40 dark:bg-zinc-950/20 p-5 flex flex-col gap-6 overflow-y-auto animate-in slide-in-from-left duration-300">
+    <div
+      data-lenis-prevent
+      className="w-72 shrink-0 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/40 dark:bg-zinc-950/20 p-5 flex flex-col gap-6 overflow-y-auto animate-in slide-in-from-left duration-300"
+    >
       <div>
         <h1 className="font-sans text-lg font-bold tracking-tight">
           Portfolio Studio

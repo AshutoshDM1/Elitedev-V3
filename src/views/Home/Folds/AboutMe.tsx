@@ -1,9 +1,7 @@
-import BorderGlow from "@/components/BorderGlow";
-import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SubSection from "@/Shared/Section/SubSection";
-import { Calendar1, CalendarSearch, MailPlus } from "lucide-react";
+import { Calendar1, MailPlus } from "lucide-react";
 import Link from "next/link";
 
 const AboutMe = () => {
@@ -16,7 +14,7 @@ const AboutMe = () => {
             <span className="font-semibold text-foreground">full stack developer</span> who loves building{" "}
             <span className="font-semibold text-foreground">clean, modern websites and apps</span> where
             design, functionality, and even the smallest details matter. My focus is on making products that are
-            both <span className="font-semibold text-foreground">practical</span> and{" "}
+            both <span className="font-semibold text-foreground">Scalable</span> and{" "}
             <span className="font-semibold text-foreground">visually satisfying</span>.
           </p>
           <div className="flex gap-2">

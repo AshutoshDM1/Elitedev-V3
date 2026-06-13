@@ -17,9 +17,9 @@ export default function Home() {
         <Profile />
         <AboutMe />
         <GitHubGraph />
+        <Project />
         <Techstack />
         <Experience />
-        <Project />
         <Blogs />
         <Quote />
         <Footer />

@@ -11,7 +11,7 @@ import LeftPanel from "./components/LeftPanel";
 import RightPanel from "./components/RightPanel";
 import BottomConsole from "./components/BottomConsole";
 
-export default function PortfolioStudio() {
+export default function ResumeStudio() {
   const [pageSize, setPageSize] = React.useState("a4");
   const [zoom, setZoom] = React.useState(1.0);
   const [canvasDark, setCanvasDark] = React.useState(false);
@@ -25,6 +25,26 @@ export default function PortfolioStudio() {
       setCanvasDark(isGlobalDark);
     }
   }, [isGlobalDark, mounted]);
+
+  React.useEffect(() => {
+    // Lock the root and body scrolling
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalBodyHeight = document.body.style.height;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalHtmlHeight = document.documentElement.style.height;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100vh";
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.height = "100vh";
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.body.style.height = originalBodyHeight;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.documentElement.style.height = originalHtmlHeight;
+    };
+  }, []);
 
   const getSizeStyles = () => {
     switch (pageSize) {
@@ -98,99 +118,10 @@ export default function PortfolioStudio() {
   };
 
   const handleDownloadPDF = () => {
-    const canvasElement = document.getElementById(
-      "portfolio-studio-canvas-content",
+    window.open(
+      "https://drive.google.com/file/d/1DZ_ysG7D15G0_cdH8F0lISCJ0JJbjHNB/view?usp=drive_link",
+      "_blank"
     );
-    if (!canvasElement) {
-      toast.error("Canvas content not found");
-      return;
-    }
-
-    // Retrieve current --font-global value from root element
-    const fontGlobal = typeof window !== 'undefined'
-      ? document.documentElement.style.getPropertyValue('--font-global')
-      : '';
-
-    // Create a hidden iframe
-    const iframe = document.createElement("iframe");
-    iframe.style.position = "absolute";
-    iframe.style.width = "0px";
-    iframe.style.height = "0px";
-    iframe.style.border = "none";
-    document.body.appendChild(iframe);
-
-    const doc = iframe.contentWindow?.document;
-    if (!doc) {
-      toast.error("Could not initialize printing frame");
-      return;
-    }
-
-    let stylesHtml = "";
-    document.querySelectorAll("style, link[rel='stylesheet']").forEach((el) => {
-      stylesHtml += el.outerHTML;
-    });
-
-    let pageStyle = "";
-    if (pageSize === "a4") {
-      pageStyle = "@page { size: 210mm 297mm; margin: 0; }";
-    } else if (pageSize === "a4-landscape") {
-      pageStyle = "@page { size: 297mm 210mm; margin: 0; }";
-    } else if (pageSize === "letter") {
-      pageStyle = "@page { size: 8.5in 11in; margin: 0; }";
-    } else if (pageSize === "letter-landscape") {
-      pageStyle = "@page { size: 11in 8.5in; margin: 0; }";
-    } else {
-      pageStyle = "@page { size: auto; margin: 0; }";
-    }
-
-    doc.open();
-    doc.write(`
-      <!DOCTYPE html>
-      <html class="${canvasDark ? "dark" : ""}" style="background-color: ${canvasDark ? "#09090b" : "#ffffff"} !important; height: 100%;${fontGlobal ? ` --font-global: ${fontGlobal};` : ''}">
-        <head>
-          <title>Portfolio_Resume</title>
-          ${stylesHtml}
-          <style>
-            ${pageStyle}
-            html, body {
-              margin: 0 !important;
-              padding: 0 !important;
-              height: 100% !important;
-              min-height: 100% !important;
-              background-color: ${canvasDark ? "#09090b" : "#ffffff"} !important;
-              background: ${canvasDark ? "#09090b" : "#ffffff"} !important;
-              -webkit-print-color-adjust: exact !important;
-              print-color-adjust: exact !important;
-            }
-            #print-wrapper {
-              width: 100%;
-              height: 100% !important;
-              margin: 0 !important;
-              padding: 0 !important;
-              transform: none !important;
-              box-shadow: none !important;
-              border: none !important;
-            }
-          </style>
-        </head>
-        <body class="${canvasDark ? "bg-zinc-950 text-white" : "bg-white text-zinc-900"}" style="background-color: ${canvasDark ? "#09090b" : "#ffffff"} !important; height: 100%;">
-          <div id="print-wrapper" class="${canvasDark ? "dark" : ""}">
-            ${canvasElement.innerHTML}
-          </div>
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-                setTimeout(function() {
-                  window.frameElement.remove();
-                }, 500);
-              }, 600);
-            };
-          </script>
-        </body>
-      </html>
-    `);
-    doc.close();
   };
 
   const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.1, 2.0));
@@ -198,7 +129,7 @@ export default function PortfolioStudio() {
   const handleResetZoom = () => setZoom(1.0);
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden relative">
+    <div className="flex flex-col min-h-screen bg-background text-foreground overflow-hidden relative">
       {/* Main Studio Viewport */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Panel: Studio & Design Settings */}
@@ -217,7 +148,8 @@ export default function PortfolioStudio() {
 
         {/* Center Panel: Interactive Canvas */}
         <div
-          className="flex-1 overflow-auto p-8 flex items-start justify-center relative transition-all duration-300 no-scrollbar"
+          data-lenis-prevent
+          className="flex-1 overflow-auto pb-40 p-8 flex items-start justify-center relative transition-all duration-300 no-scrollbar"
           style={getStudioBgStyle()}
         >
           {/* Back Button */}
@@ -228,22 +160,33 @@ export default function PortfolioStudio() {
           >
             <ArrowLeft className="size-4" />
           </Link>
+          
+          {/* Scaled Layout Container to reserve correct space for zoom scroll */}
           <div
-            className="transition-all duration-300 pb-16"
+            className="relative transition-all duration-300"
             style={{
-              transform: `scale(${zoom})`,
-              transformOrigin: "top center",
+              width: `calc(${getSizeStyles().width} * ${zoom})`,
+              height: `calc(${getSizeStyles().height} * ${zoom})`,
             }}
           >
+            {/* The scaled wrapper centered inside the layout container */}
             <div
-              id="portfolio-studio-canvas"
-              className={`shadow-[0_25px_60px_rgba(0,0,0,0.15)] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden relative transition-colors duration-300 ${
-                canvasDark ? "dark" : ""
-              }`}
-              style={getSizeStyles()}
+              className="absolute left-1/2 top-0 origin-top transition-all duration-300"
+              style={{
+                transform: `translateX(-50%) scale(${zoom})`,
+                width: getSizeStyles().width,
+                height: getSizeStyles().height,
+              }}
             >
-              <div id="portfolio-studio-canvas-content" className="h-full">
-                <CanvasContent />
+              <div
+                id="portfolio-studio-canvas"
+                className={`shadow-[0_25px_60px_rgba(0,0,0,0.15)] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden relative transition-colors duration-300 w-full h-full ${
+                  canvasDark ? "dark" : ""
+                }`}
+              >
+                <div id="portfolio-studio-canvas-content" className="h-full">
+                  <CanvasContent />
+                </div>
               </div>
             </div>
           </div>

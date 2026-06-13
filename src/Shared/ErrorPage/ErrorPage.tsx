@@ -20,7 +20,7 @@ export function Error404({
   postcardImage = banner.cover2,
   postcardAlt = "New York City Postcard",
   heading = "404",
-  subtext = "Senpai must have got lost while training , however",
+  subtext = "Senpai must have got lost while training , however you can explore my works",
   backButtonLabel = "Back to Home",
   backButtonHref = "/",
 }: Error404Props) {
@@ -46,10 +46,10 @@ export function Error404({
           <h1 className="text-6xl md:text-7xl font-doto mb-6 leading-tight">
             {heading}
           </h1>
-          <p className="text-muted-foreground text-base md:text-lg mb-10 font-sans">
+          <p className="text-muted-foreground max-w-lg text-base md:text-lg mb-10 font-sans">
             {subtext}
           </p>
-          <Button asChild className="rounded-lg px-5 py-4 font-sans">
+          <Button asChild className="rounded-sm px-5 py-4 font-sans">
             <Link href={backButtonHref} className="flex items-center gap-2">
               {backButtonLabel}
             </Link>

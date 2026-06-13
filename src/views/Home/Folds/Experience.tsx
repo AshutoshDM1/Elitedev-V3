@@ -47,6 +47,20 @@ export default function Experience() {
   );
 }
 
+const parseMarkdownBold = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-semibold text-foreground dark:text-zinc-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+};
+
 const ExperienceCards = ({
   data,
   isLast,
@@ -148,7 +162,7 @@ const ExperienceCards = ({
                 {data.description.map((bullet, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <span className="w-1 h-1 bg-foreground rounded-full  mt-2 shrink-0" />
-                    <span>{bullet}</span>
+                    <span>{parseMarkdownBold(bullet)}</span>
                   </li>
                 ))}
               </ul>
